@@ -44,20 +44,26 @@
                     <div class="d-flex justify-content-between"><small>Harga</small><strong>Rp {{ number_format($item->price, 0, ',', '.') }}</strong></div>
                 </div>
 
-                @if($order->status === 'confirmed')
-                    <div class="d-grid gap-2">
+                <div class="d-grid gap-2">
+                    @if($order->status === 'confirmed')
                         <a href="{{ route('user.tickets.pdf', $item->id) }}" class="btn btn-primary" target="_blank">
                             <i class="fas fa-file-pdf me-1"></i>Download PDF
                         </a>
                         <a href="{{ route('user.tickets.pdf', $item->id) }}" class="btn btn-outline-primary" target="_blank">
                             <i class="fas fa-print me-1"></i>Print Tiket
                         </a>
-                    </div>
-                @else
-                    <div class="alert alert-info mb-0 text-center">
-                        <small><i class="fas fa-info-circle me-1"></i>Tiket dapat didownload setelah pembayaran dikonfirmasi</small>
-                    </div>
-                @endif
+                    @else
+                        <button type="button" class="btn btn-secondary" disabled>
+                            <i class="fas fa-file-pdf me-1"></i>Download PDF
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" disabled>
+                            <i class="fas fa-print me-1"></i>Print Tiket
+                        </button>
+                        <div class="alert alert-warning mb-0 mt-2 text-center py-2">
+                            <small><i class="fas fa-clock me-1"></i>Menunggu verifikasi admin</small>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
