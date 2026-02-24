@@ -883,6 +883,7 @@ textarea.form-control {
     border-radius: 12px;
     box-shadow: var(--shadow-2);
     z-index: 99999;
+    position: absolute !important;
 }
 
 .dropdown-item {
@@ -1041,6 +1042,10 @@ textarea.form-control {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+}
+
+.nav-auth-actions .dropdown {
+    position: relative;
 }
 
 .navbar .btn-sm {
@@ -2010,7 +2015,7 @@ textarea.form-control {
     padding: 0.5rem;
     margin-top: 0.5rem;
     z-index: 99999;
-    position: relative;
+    position: absolute !important;
 }
 
 .user-dropdown .dropdown-header {
