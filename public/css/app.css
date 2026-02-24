@@ -882,7 +882,7 @@ textarea.form-control {
     border: 1px solid rgba(16, 38, 50, 0.12);
     border-radius: 12px;
     box-shadow: var(--shadow-2);
-    z-index: 1050;
+    z-index: 99999;
     position: absolute !important;
 }
 
@@ -962,7 +962,7 @@ textarea.form-control {
 .site-navbar {
     position: sticky;
     top: 0.85rem;
-    z-index: 1000;
+    z-index: 9999;
     margin: 0.85rem auto 0;
     width: calc(100% - 2rem);
     max-width: 1240px;
@@ -2014,7 +2014,7 @@ textarea.form-control {
     box-shadow: 0 14px 32px rgba(10, 34, 46, 0.18);
     padding: 0.5rem;
     margin-top: 0.5rem;
-    z-index: 1050;
+    z-index: 99999;
     position: absolute !important;
 }
 
@@ -2142,4 +2142,18 @@ textarea.form-control {
         height: 38px;
         font-size: 0.9rem;
     }
+}
+
+
+/* Ensure navbar container doesn't clip dropdown */
+.site-navbar .container {
+    position: static;
+}
+
+.site-navbar .navbar-collapse {
+    position: static;
+}
+
+.site-navbar .nav-auth-actions {
+    position: static;
 }
