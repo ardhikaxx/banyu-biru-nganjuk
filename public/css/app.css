@@ -2011,11 +2011,12 @@ textarea.form-control {
     min-width: 280px;
     border: 1px solid rgba(16, 38, 50, 0.12);
     border-radius: 14px;
-    box-shadow: 0 14px 32px rgba(10, 34, 46, 0.18);
+    box-shadow: 0 14px 32px rgba(10, 34, 46, 0.18) !important;
     padding: 0.5rem;
     margin-top: 0.5rem;
-    z-index: 99999;
+    z-index: 99999 !important;
     position: absolute !important;
+    will-change: transform;
 }
 
 .user-dropdown .dropdown-header {
@@ -2148,12 +2149,37 @@ textarea.form-control {
 /* Ensure navbar container doesn't clip dropdown */
 .site-navbar .container {
     position: static;
+    overflow: visible !important;
 }
 
 .site-navbar .navbar-collapse {
     position: static;
+    overflow: visible !important;
 }
 
 .site-navbar .nav-auth-actions {
     position: static;
+    overflow: visible !important;
+}
+
+.site-navbar .dropdown {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Ensure main content doesn't interfere */
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+.site-main-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure hero sections have lower z-index */
+.home-shell {
+    position: relative;
+    z-index: 1;
 }
