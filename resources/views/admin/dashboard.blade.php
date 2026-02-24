@@ -34,9 +34,9 @@
                     <i class="fas fa-ticket-alt"></i>
                 </div>
                 <div class="stat-value">{{ $totalTicketsSold }}</div>
-                <div class="stat-label">Total Tiket Aktif</div>
+                <div class="stat-label">Total Tiket Terjual</div>
                 <small class="text-muted mt-2 d-block" style="font-size: 0.75rem;">
-                    <i class="fas fa-arrow-up me-1"></i>Tiket terjual
+                    <i class="fas fa-check-circle me-1"></i>Sudah dikonfirmasi
                 </small>
             </div>
         </div>
