@@ -16,6 +16,12 @@ class TicketController extends Controller
 {
     public function index()
     {
+        // Check if user is admin
+        if (auth()->user()->hasRole('admin')) {
+            return redirect()->route('admin.dashboard')
+                ->with('swal_admin_restriction', true);
+        }
+        
         $tickets = Ticket::query()
             ->where('is_active', true)
             ->where('name', 'Tiket Masuk')
@@ -32,6 +38,12 @@ class TicketController extends Controller
 
     public function order(Request $request)
     {
+        // Check if user is admin
+        if (auth()->user()->hasRole('admin')) {
+            return redirect()->route('admin.dashboard')
+                ->with('swal_admin_restriction', true);
+        }
+        
         $data = $request->validate([
             'visit_date' => ['required', 'date', 'after_or_equal:today'],
             'items' => ['required', 'array', 'min:1'],
@@ -159,6 +171,16 @@ class TicketController extends Controller
         $pdf = Pdf::loadView('pdf.ticket', compact('item', 'order'));
 
         return $pdf->download('ticket-'.$item->ticket_code.'.pdf');
+    }
+
+    public function history()
+    {
+        $orders = TicketOrder::with(['items.ticket'])
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('user.tickets.history', compact('orders'));
     }
 }
 

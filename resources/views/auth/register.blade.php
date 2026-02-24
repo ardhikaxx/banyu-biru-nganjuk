@@ -52,19 +52,29 @@
                             <i class="fas fa-user-plus me-1"></i>Daftar
                         </button>
 
-                        <p class="text-center mb-0">Sudah punya akun? <a href="{{ route('login') }}" class="fw-semibold">Login di sini</a></p>
+                        <p class="text-center mb-3">Sudah punya akun? <a href="{{ route('login') }}" class="fw-semibold">Login di sini</a></p>
+                        
+                        <div class="text-center d-lg-none">
+                            <a href="{{ route('home') }}" class="btn btn-outline-secondary w-100">
+                                <i class="fas fa-arrow-left me-2"></i>Kembali ke Beranda
+                            </a>
+                        </div>
                     </form>
                 </div>
 
                 <div class="col-lg-5 d-none d-lg-block auth-side p-4 p-lg-5 d-flex align-items-center">
-                    <div>
+                    <div class="w-100">
                         <h4 class="mb-3">Kenapa daftar?</h4>
-                        <ul class="list-unstyled mb-0">
+                        <ul class="list-unstyled mb-4">
                             <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Akses pembelian tiket online</li>
                             <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Booking pendopo dari rumah</li>
                             <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Histori transaksi lebih rapi</li>
                             <li><i class="fas fa-check-circle me-2"></i>Verifikasi pembayaran lebih cepat</li>
                         </ul>
+                        
+                        <a href="{{ route('home') }}" class="btn btn-outline-light">
+                            <i class="fas fa-arrow-left me-2"></i>Kembali ke Beranda
+                        </a>
                     </div>
                 </div>
             </div>

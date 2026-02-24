@@ -37,6 +37,117 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 700, once: true, offset: 80 });
+        
+        // Password Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initPasswordToggles();
+            initLogoutConfirmation();
+        });
+        
+        function initLogoutConfirmation() {
+            const logoutForms = document.querySelectorAll('.logout-form');
+            
+            logoutForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    Swal.fire({
+                        title: 'Konfirmasi Logout',
+                        text: 'Apakah Anda yakin ingin keluar dari sistem?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#0d9488',
+                        cancelButtonColor: '#6b7280',
+                        confirmButtonText: '<i class="fas fa-check me-2"></i>Ya, Logout',
+                        cancelButtonText: '<i class="fas fa-times me-2"></i>Batal',
+                        reverseButtons: true,
+                        customClass: {
+                            popup: 'swal-teal-popup',
+                            confirmButton: 'swal-teal-confirm',
+                            cancelButton: 'swal-teal-cancel'
+                        },
+                        backdrop: 'rgba(15, 118, 110, 0.1)',
+                        position: 'center',
+                        heightAuto: false,
+                        didOpen: () => {
+                            const swalContainer = document.querySelector('.swal2-container');
+                            if (swalContainer) {
+                                swalContainer.style.zIndex = '99999';
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Logging out...',
+                                text: 'Mohon tunggu sebentar',
+                                icon: 'info',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+                                position: 'center',
+                                heightAuto: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                    const swalContainer = document.querySelector('.swal2-container');
+                                    if (swalContainer) {
+                                        swalContainer.style.zIndex = '99999';
+                                    }
+                                }
+                            });
+                            
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        }
+        
+        function initPasswordToggles() {
+            const passwordInputs = document.querySelectorAll('input[type="password"]');
+            
+            passwordInputs.forEach(input => {
+                if (input.parentElement.classList.contains('password-toggle-wrapper')) {
+                    return;
+                }
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'password-toggle-wrapper';
+                wrapper.style.position = 'relative';
+                
+                input.parentNode.insertBefore(wrapper, input);
+                wrapper.appendChild(input);
+                
+                const toggleBtn = document.createElement('button');
+                toggleBtn.type = 'button';
+                toggleBtn.className = 'password-toggle-btn';
+                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                toggleBtn.setAttribute('aria-label', 'Toggle password visibility');
+                toggleBtn.style.cssText = 'position: absolute; right: 0; top: 0; height: 100%; width: 3rem; border: none; background: transparent; color: #6b7280; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s ease; z-index: 10;';
+                
+                wrapper.appendChild(toggleBtn);
+                
+                input.style.paddingRight = '3rem';
+                
+                toggleBtn.addEventListener('click', function() {
+                    const type = input.getAttribute('type');
+                    if (type === 'password') {
+                        input.setAttribute('type', 'text');
+                        toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                    } else {
+                        input.setAttribute('type', 'password');
+                        toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                    }
+                });
+                
+                toggleBtn.addEventListener('mouseenter', function() {
+                    toggleBtn.style.color = '#0d9488';
+                });
+                
+                toggleBtn.addEventListener('mouseleave', function() {
+                    toggleBtn.style.color = '#6b7280';
+                });
+            });
+        }
     </script>
     @stack('scripts')
 </body>

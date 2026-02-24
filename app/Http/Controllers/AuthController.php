@@ -37,7 +37,7 @@ class AuthController extends Controller
             return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin.');
         }
 
-        return redirect()->route('user.tickets.index')->with('success', 'Login berhasil.');
+        return redirect()->route('home')->with('success', 'Login berhasil.');
     }
 
     public function register(Request $request)
@@ -70,6 +70,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'Anda berhasil logout.');
+        return redirect()->route('home')->with('success', 'Anda berhasil logout.');
     }
 }

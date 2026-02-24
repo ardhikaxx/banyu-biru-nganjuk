@@ -32,6 +32,7 @@
     }
 
     .hero-inner {
+        padding: 3rem;
         position: relative;
         z-index: 2;
     }
@@ -125,20 +126,26 @@
         margin: 0;
         padding: 0;
         list-style: none;
+        color: #fff;
     }
 
     .hero-side-list li {
         display: flex;
         gap: 0.65rem;
         align-items: flex-start;
-        color: rgba(241, 253, 255, 0.9);
+        color: #fff !important;
         margin-bottom: 0.82rem;
         font-size: 0.92rem;
+        line-height: 1.5;
     }
 
     .hero-side-list li i {
-        color: #fde68a;
+        color: #ebfdff;
         margin-top: 0.2rem;
+    }
+    
+    .hero-side-list li span {
+        color: #fff !important;
     }
 
     .hero-side-price {
@@ -396,7 +403,7 @@ home-shell
                 <h1 class="hero-title" data-aos="fade-up" data-aos-delay="80">
                     Pusat Tiket dan Booking
                     <br>
-                    Pemandian Air Panas Banyu Biru
+                    Pemandian Air Panas Banyu Biru Nganjuk
                 </h1>
 
                 <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="140">
@@ -404,7 +411,7 @@ home-shell
                 </p>
 
                 <div class="hero-actions" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#tiket" class="btn btn-light btn-lg">
+                    <a href="#tiket" class="btn btn-primary btn-lg">
                         <i class="fas fa-ticket-alt me-2"></i>Beli Tiket
                     </a>
                     <a href="#booking" class="btn btn-outline-light btn-lg">
@@ -438,15 +445,15 @@ home-shell
                 <div class="hero-side-card">
                     <h5 class="mb-3">Kenapa pakai sistem ini?</h5>
                     <ul class="hero-side-list">
-                        <li><i class="fas fa-shield-alt"></i><span>Pembayaran lebih aman dengan upload bukti transfer.</span></li>
-                        <li><i class="fas fa-bolt"></i><span>Konfirmasi pesanan lebih cepat lewat panel admin.</span></li>
-                        <li><i class="fas fa-qrcode"></i><span>Tiket punya kode unik untuk proses scan di pintu masuk.</span></li>
+                        <li class="text-white"><i class="fas fa-shield-alt"></i><span>Pembayaran lebih aman dengan upload bukti transfer.</span></li>
+                        <li class="text-white"><i class="fas fa-bolt"></i><span>Konfirmasi pesanan lebih cepat lewat panel admin.</span></li>
+                        <li class="text-white"><i class="fas fa-qrcode"></i><span>Tiket punya kode unik untuk proses scan di pintu masuk.</span></li>
                     </ul>
                     <div class="hero-side-price">
                         <small>Harga dasar tiket</small>
                         <strong>Rp 5.000 / orang</strong>
                     </div>
-                    <a href="#tiket" class="btn btn-warning w-100">
+                    <a href="#tiket" class="btn btn-primary w-100 fw-bold text-white">
                         <i class="fas fa-arrow-right me-2"></i>Mulai Pemesanan
                     </a>
                 </div>
@@ -617,7 +624,7 @@ home-shell
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content rounded-4 border-0 shadow-lg">
             <div class="modal-header text-white p-4">
-                <h5 class="modal-title fw-bold fs-4">Beli Tiket <span id="modalTicketType"></span></h5>
+                <h5 class="modal-title fw-bold fs-4 text-white">Beli Tiket</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4 p-md-5">
@@ -660,6 +667,7 @@ home-shell
 @push('scripts')
 <script>
     const isGuest = {{ auth()->check() ? 'false' : 'true' }};
+    const isAdmin = {{ auth()->check() && auth()->user()->hasRole('admin') ? 'true' : 'false' }};
     let selectedPrice = 0;
 
     function showNeedLogin() {
@@ -668,6 +676,21 @@ home-shell
             title: 'Login Diperlukan',
             text: 'Silakan login melalui menu Login di navbar.',
             confirmButtonColor: '#0f766e'
+        });
+    }
+    
+    function showAdminRestriction() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Akses Terbatas',
+            html: '<p class="mb-2">Akun admin tidak dapat melakukan booking atau pembelian tiket.</p><p class="mb-0 text-muted small">Gunakan akun user biasa untuk melakukan transaksi.</p>',
+            confirmButtonText: 'Mengerti',
+            confirmButtonColor: '#0f766e',
+            customClass: {
+                popup: 'swal-teal-popup',
+                confirmButton: 'swal-teal-confirm'
+            },
+            backdrop: 'rgba(15, 118, 110, 0.1)'
         });
     }
 
@@ -687,12 +710,16 @@ home-shell
 
         document.querySelectorAll('.buy-ticket-btn').forEach((button) => {
             button.addEventListener('click', function () {
+                if (isAdmin) {
+                    showAdminRestriction();
+                    return;
+                }
+                
                 const ticketId = this.dataset.ticketId;
                 const ticketName = this.dataset.ticketName;
                 selectedPrice = Number(this.dataset.price || 0);
 
                 document.getElementById('selectedTicketId').value = ticketId;
-                document.getElementById('modalTicketType').textContent = ticketName;
                 document.getElementById('modalTicketName').textContent = ticketName;
                 document.getElementById('modalPrice').textContent = selectedPrice.toLocaleString('id-ID');
                 document.getElementById('modalQuantity').value = 1;
@@ -714,6 +741,12 @@ home-shell
             if (isGuest) {
                 modal.hide();
                 showNeedLogin();
+                return;
+            }
+            
+            if (isAdmin) {
+                modal.hide();
+                showAdminRestriction();
                 return;
             }
 
@@ -740,6 +773,13 @@ home-shell
             if (isGuest) {
                 e.preventDefault();
                 showNeedLogin();
+                return;
+            }
+            
+            if (isAdmin) {
+                e.preventDefault();
+                showAdminRestriction();
+                return;
             }
         });
 
@@ -747,6 +787,12 @@ home-shell
             if (isGuest) {
                 this.value = '';
                 showNeedLogin();
+                return;
+            }
+            
+            if (isAdmin) {
+                this.value = '';
+                showAdminRestriction();
                 return;
             }
 

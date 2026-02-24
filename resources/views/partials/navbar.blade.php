@@ -44,9 +44,54 @@
             <div class="nav-auth-actions ms-xl-3 mt-3 mt-xl-0">
                 @auth
                     @if(auth()->user()->hasRole('user'))
-                        <div class="user-chip d-none d-xl-inline-flex">
-                            <span class="chip-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
-                            <small>{{ auth()->user()->name }}</small>
+                        <div class="dropdown d-none d-xl-inline-block">
+                            <button class="user-chip dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="chip-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+                                <small>{{ auth()->user()->name }}</small>
+                                <i class="fas fa-chevron-down ms-2" style="font-size: 0.75rem;"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-dropdown">
+                                <li class="dropdown-header">
+                                    <div class="dropdown-user-info">
+                                        <div class="dropdown-avatar">
+                                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                        </div>
+                                        <div>
+                                            <div class="dropdown-user-name">{{ auth()->user()->name }}</div>
+                                            <div class="dropdown-user-email">{{ auth()->user()->email }}</div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user.tickets.history') }}">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        <span>Tiket Saya</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user.bookings.history') }}">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>Booking Saya</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user.profile.index') }}">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>Profil Saya</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST" class="logout-form">
+                                        @csrf
+                                        <button class="dropdown-item text-danger" type="submit">
+                                            <i class="fas fa-right-from-bracket"></i>
+                                            <span>Logout</span>
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
                         </div>
                     @endif
 
@@ -56,7 +101,7 @@
                         </a>
                     @endif
 
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline logout-form">
                         @csrf
                         <button class="btn btn-outline-primary btn-sm" type="submit">
                             <i class="fas fa-right-from-bracket me-1"></i>Logout

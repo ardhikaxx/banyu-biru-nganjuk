@@ -72,6 +72,23 @@
     </script>
 @endif
 
+@if (session('swal_admin_restriction'))
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Akses Terbatas',
+            html: '<p class="mb-2">Akun admin tidak dapat melakukan booking atau pembelian tiket.</p><p class="mb-0 text-muted small">Gunakan akun user biasa untuk melakukan transaksi.</p>',
+            confirmButtonText: 'Mengerti',
+            confirmButtonColor: '#0f766e',
+            customClass: {
+                popup: 'swal-teal-popup',
+                confirmButton: 'swal-teal-confirm'
+            },
+            backdrop: 'rgba(15, 118, 110, 0.1)'
+        });
+    </script>
+@endif
+
 @if ($errors->any())
     <script>
         Swal.fire({

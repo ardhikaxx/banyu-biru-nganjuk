@@ -25,6 +25,12 @@ class BookingController extends Controller
 
     public function index()
     {
+        // Check if user is admin
+        if (auth()->user()->hasRole('admin')) {
+            return redirect()->route('admin.dashboard')
+                ->with('swal_admin_restriction', true);
+        }
+        
         $place = $this->resolvePendopo();
 
         return view('user.bookings.index', compact('place'));
@@ -32,6 +38,12 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        // Check if user is admin
+        if (auth()->user()->hasRole('admin')) {
+            return redirect()->route('admin.dashboard')
+                ->with('swal_admin_restriction', true);
+        }
+        
         $data = $request->validate([
             'booking_date' => ['required', 'date', 'after_or_equal:today'],
             'visitor_name' => ['required', 'string', 'max:100'],
@@ -137,5 +149,15 @@ class BookingController extends Controller
                 ? 'Tanggal ini sudah dibooking. Silakan pilih tanggal lain.'
                 : 'Tanggal tersedia.',
         ]);
+    }
+
+    public function history()
+    {
+        $bookings = Booking::with('place')
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('user.bookings.history', compact('bookings'));
     }
 }

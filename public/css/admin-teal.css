@@ -1316,6 +1316,102 @@ body.admin-collapsed .sidebar-status {
 .fw-semibold { font-weight: 600 !important; }
 .fw-bold { font-weight: 700 !important; }
 
+/* Password Toggle */
+.password-toggle-wrapper {
+    position: relative;
+}
+
+.password-toggle-wrapper .form-control {
+    padding-right: 3rem;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 3rem;
+    border: none;
+    background: transparent;
+    color: var(--gray-500);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    z-index: 10;
+}
+
+.password-toggle-btn:hover {
+    color: var(--teal-600);
+}
+
+.password-toggle-btn:focus {
+    outline: none;
+    color: var(--teal-700);
+}
+
+.password-toggle-btn i {
+    font-size: 1rem;
+}
+
+/* SweetAlert Teal Theme */
+.swal-teal-popup {
+    border-radius: 16px !important;
+    border: 2px solid var(--teal-100) !important;
+}
+
+.swal-teal-title {
+    color: var(--teal-900) !important;
+    font-weight: 700 !important;
+}
+
+.swal-teal-confirm {
+    border-radius: 9999px !important;
+    padding: 0.625rem 1.5rem !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3) !important;
+}
+
+.swal-teal-confirm:hover {
+    background-color: #0f766e !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(13, 148, 136, 0.4) !important;
+}
+
+.swal-teal-cancel {
+    border-radius: 9999px !important;
+    padding: 0.625rem 1.5rem !important;
+    font-weight: 600 !important;
+}
+
+.swal-teal-cancel:hover {
+    background-color: #4b5563 !important;
+}
+
+.swal2-icon.swal2-question {
+    border-color: var(--teal-500) !important;
+    color: var(--teal-600) !important;
+}
+
+/* Fix SweetAlert z-index */
+.swal2-container {
+    z-index: 99999 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.swal2-popup {
+    z-index: 99999 !important;
+    position: relative !important;
+}
+
 /* Smooth scrollbar */
 ::-webkit-scrollbar {
     width: 8px;

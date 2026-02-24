@@ -99,7 +99,117 @@
                 .dropdown-menu:not(.show) { opacity: 0; pointer-events: none; }
             `;
             document.head.appendChild(style);
+            
+            // Password Toggle Functionality
+            initPasswordToggles();
+            
+            // Logout Confirmation
+            initLogoutConfirmation();
         });
+        
+        function initLogoutConfirmation() {
+            const logoutForms = document.querySelectorAll('.logout-form');
+            
+            logoutForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    Swal.fire({
+                        title: 'Konfirmasi Logout',
+                        text: 'Apakah Anda yakin ingin keluar dari sistem?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#0d9488',
+                        cancelButtonColor: '#6b7280',
+                        confirmButtonText: '<i class="fas fa-check me-2"></i>Ya, Logout',
+                        cancelButtonText: '<i class="fas fa-times me-2"></i>Batal',
+                        reverseButtons: true,
+                        customClass: {
+                            popup: 'swal-teal-popup',
+                            title: 'swal-teal-title',
+                            confirmButton: 'swal-teal-confirm',
+                            cancelButton: 'swal-teal-cancel'
+                        },
+                        backdrop: 'rgba(15, 118, 110, 0.1)',
+                        position: 'center',
+                        heightAuto: false,
+                        didOpen: () => {
+                            // Ensure SweetAlert is on top
+                            const swalContainer = document.querySelector('.swal2-container');
+                            if (swalContainer) {
+                                swalContainer.style.zIndex = '99999';
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Show loading
+                            Swal.fire({
+                                title: 'Logging out...',
+                                text: 'Mohon tunggu sebentar',
+                                icon: 'info',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+                                position: 'center',
+                                heightAuto: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                    const swalContainer = document.querySelector('.swal2-container');
+                                    if (swalContainer) {
+                                        swalContainer.style.zIndex = '99999';
+                                    }
+                                }
+                            });
+                            
+                            // Submit form
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        }
+        
+        function initPasswordToggles() {
+            // Find all password inputs
+            const passwordInputs = document.querySelectorAll('input[type="password"]');
+            
+            passwordInputs.forEach(input => {
+                // Skip if already wrapped
+                if (input.parentElement.classList.contains('password-toggle-wrapper')) {
+                    return;
+                }
+                
+                // Create wrapper
+                const wrapper = document.createElement('div');
+                wrapper.className = 'password-toggle-wrapper';
+                
+                // Wrap the input
+                input.parentNode.insertBefore(wrapper, input);
+                wrapper.appendChild(input);
+                
+                // Create toggle button
+                const toggleBtn = document.createElement('button');
+                toggleBtn.type = 'button';
+                toggleBtn.className = 'password-toggle-btn';
+                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                toggleBtn.setAttribute('aria-label', 'Toggle password visibility');
+                
+                // Add toggle button after input
+                wrapper.appendChild(toggleBtn);
+                
+                // Add click event
+                toggleBtn.addEventListener('click', function() {
+                    const type = input.getAttribute('type');
+                    if (type === 'password') {
+                        input.setAttribute('type', 'text');
+                        toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                    } else {
+                        input.setAttribute('type', 'password');
+                        toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                    }
+                });
+            });
+        }
     </script>
     @stack('scripts')
 </body>

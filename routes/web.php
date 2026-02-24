@@ -39,6 +39,7 @@ Route::middleware(['auth', 'role:user'])->name('user.')->group(function () {
     Route::post('/tiket/upload/{code}', [User\TicketController::class, 'uploadProof'])->name('tickets.upload');
     Route::get('/tiket/download/{code}', [User\TicketController::class, 'download'])->name('tickets.download');
     Route::get('/tiket/pdf/{itemId}', [User\TicketController::class, 'downloadPdf'])->name('tickets.pdf');
+    Route::get('/tiket/riwayat', [User\TicketController::class, 'history'])->name('tickets.history');
 
     Route::get('/booking', [User\BookingController::class, 'index'])->name('bookings.index');
     Route::post('/booking/store', [User\BookingController::class, 'store'])->name('bookings.store');
@@ -46,6 +47,7 @@ Route::middleware(['auth', 'role:user'])->name('user.')->group(function () {
     Route::post('/booking/upload/{code}', [User\BookingController::class, 'uploadProof'])->name('bookings.upload');
     Route::get('/booking/status/{code}', [User\BookingController::class, 'status'])->name('bookings.status');
     Route::get('/booking/check-date', [User\BookingController::class, 'checkDate'])->name('bookings.checkDate');
+    Route::get('/booking/riwayat', [User\BookingController::class, 'history'])->name('bookings.history');
 
     Route::get('/profil', [User\ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profil', [User\ProfileController::class, 'update'])->name('profile.update');

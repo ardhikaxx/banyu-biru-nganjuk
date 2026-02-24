@@ -8,14 +8,18 @@
         <div class="col-xl-10">
             <div class="row g-0 auth-panel">
                 <div class="col-lg-6 d-none d-lg-block auth-side p-5 d-flex align-items-center">
-                    <div>
+                    <div class="w-100">
                         <h2 class="mb-3"><i class="fas fa-water me-2"></i>Selamat Datang</h2>
                         <p class="mb-4">Masuk untuk membeli tiket dan booking pendopo dengan proses yang cepat.</p>
-                        <ul class="list-unstyled mb-0">
+                        <ul class="list-unstyled mb-4">
                             <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Transaksi aman</li>
                             <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Tiket digital otomatis</li>
                             <li><i class="fas fa-check-circle me-2"></i>Status pesanan real-time</li>
                         </ul>
+                        
+                        <a href="{{ route('home') }}" class="btn btn-outline-light">
+                            <i class="fas fa-arrow-left me-2"></i>Kembali ke Beranda
+                        </a>
                     </div>
                 </div>
 
@@ -45,7 +49,13 @@
                             <i class="fas fa-right-to-bracket me-1"></i>Masuk
                         </button>
 
-                        <p class="text-center mb-0">Belum punya akun? <a href="{{ route('register') }}" class="fw-semibold">Daftar sekarang</a></p>
+                        <p class="text-center mb-3">Belum punya akun? <a href="{{ route('register') }}" class="fw-semibold">Daftar sekarang</a></p>
+                        
+                        <div class="text-center d-lg-none">
+                            <a href="{{ route('home') }}" class="btn btn-outline-secondary w-100">
+                                <i class="fas fa-arrow-left me-2"></i>Kembali ke Beranda
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -69,7 +69,7 @@
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                        <form action="{{ route('logout') }}" method="POST">
+                        <form action="{{ route('logout') }}" method="POST" class="logout-form">
                             @csrf
                             <button class="dropdown-item text-danger" type="submit">
                                 <i class="fas fa-right-from-bracket"></i>
