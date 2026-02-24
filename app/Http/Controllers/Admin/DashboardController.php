@@ -14,22 +14,23 @@ class DashboardController extends Controller
     public function index()
     {
         $activeStatuses = ['pending', 'confirmed'];
+        $confirmedStatus = ['confirmed'];
 
-        $totalTicketsSold = TicketOrderItem::whereHas('order', function (Builder $query) use ($activeStatuses) {
-            $query->whereIn('status', $activeStatuses);
+        $totalTicketsSold = TicketOrderItem::whereHas('order', function (Builder $query) use ($confirmedStatus) {
+            $query->whereIn('status', $confirmedStatus);
         })->count();
 
-        $monthlyTicketSales = TicketOrder::whereIn('status', $activeStatuses)
+        $monthlyTicketSales = TicketOrder::whereIn('status', $confirmedStatus)
             ->whereYear('created_at', now()->year)
             ->whereMonth('created_at', now()->month)
             ->sum('total_price');
 
-        $monthlyBookings = Booking::whereIn('status', $activeStatuses)
+        $monthlyBookings = Booking::whereIn('status', $confirmedStatus)
             ->whereYear('created_at', now()->year)
             ->whereMonth('created_at', now()->month)
             ->count();
 
-        $monthlyRevenue = $monthlyTicketSales + Booking::whereIn('status', $activeStatuses)
+        $monthlyRevenue = $monthlyTicketSales + Booking::whereIn('status', $confirmedStatus)
             ->whereYear('created_at', now()->year)
             ->whereMonth('created_at', now()->month)
             ->sum('total_price');
@@ -42,15 +43,15 @@ class DashboardController extends Controller
             $date = Carbon::now()->subMonths($i);
             $months[] = $date->translatedFormat('M Y');
 
-            $ticketData[] = TicketOrderItem::whereHas('order', function (Builder $query) use ($date, $activeStatuses) {
+            $ticketData[] = TicketOrderItem::whereHas('order', function (Builder $query) use ($date, $confirmedStatus) {
                 $query->whereYear('visit_date', $date->year)
                     ->whereMonth('visit_date', $date->month)
-                    ->whereIn('status', $activeStatuses);
+                    ->whereIn('status', $confirmedStatus);
             })->count();
 
             $bookingData[] = Booking::whereYear('booking_date', $date->year)
                 ->whereMonth('booking_date', $date->month)
-                ->whereIn('status', $activeStatuses)
+                ->whereIn('status', $confirmedStatus)
                 ->count();
         }
 
@@ -74,5 +75,6 @@ class DashboardController extends Controller
             'hasTransactionData'
         ));
     }
+
 }
 
