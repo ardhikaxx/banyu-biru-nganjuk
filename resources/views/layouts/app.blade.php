@@ -15,13 +15,13 @@
     @stack('styles')
 </head>
 <body class="site-body @stack('body_classes')">
+    @include('partials.navbar')
+    
     <div class="site-backdrop" aria-hidden="true">
         <span class="orb orb-a"></span>
         <span class="orb orb-b"></span>
         <span class="orb orb-c"></span>
     </div>
-
-    @include('partials.navbar')
 
     <main class="main-content">
         <div class="container site-main-container">
