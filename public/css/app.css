@@ -882,7 +882,7 @@ textarea.form-control {
     border: 1px solid rgba(16, 38, 50, 0.12);
     border-radius: 12px;
     box-shadow: var(--shadow-2);
-    z-index: 99999;
+    z-index: 1050;
     position: absolute !important;
 }
 
@@ -962,7 +962,7 @@ textarea.form-control {
 .site-navbar {
     position: sticky;
     top: 0.85rem;
-    z-index: 9999;
+    z-index: 1000;
     margin: 0.85rem auto 0;
     width: calc(100% - 2rem);
     max-width: 1240px;
@@ -1142,7 +1142,7 @@ textarea.form-control {
     border: 1px solid rgba(255, 255, 255, 0.16);
     background: linear-gradient(128deg, #0b3f50 0%, #0f766e 56%, #14b8a6 100%);
     box-shadow: var(--shadow-3);
-    z-index: 1;
+    z-index: 0;
 }
 
 .page-hero::before {
@@ -1183,7 +1183,7 @@ textarea.form-control {
     color: #fff;
     position: relative;
     overflow: hidden;
-    z-index: 1;
+    z-index: 0;
 }
 
 .home-hero::before {
@@ -2014,7 +2014,7 @@ textarea.form-control {
     box-shadow: 0 14px 32px rgba(10, 34, 46, 0.18);
     padding: 0.5rem;
     margin-top: 0.5rem;
-    z-index: 99999;
+    z-index: 1050;
     position: absolute !important;
 }
 
