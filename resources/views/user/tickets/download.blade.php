@@ -4,13 +4,29 @@
 
 @section('content')
 <div class="page-hero mb-4" data-aos="fade-down">
-    <h3 class="mb-1"><i class="fas fa-download me-2"></i>Tiket Anda Siap Digunakan</h3>
+    <h3 class="mb-1"><i class="fas fa-download me-2"></i>
+        @if($order->status === 'confirmed')
+            Tiket Anda Siap Digunakan
+        @else
+            Status Pesanan Tiket
+        @endif
+    </h3>
     <p class="mb-0">Order: <strong>{{ $order->order_code }}</strong></p>
 </div>
 
-<div class="alert alert-success" data-aos="fade-up">
-    Pembayaran berhasil diverifikasi. Silakan download tiket Anda.
-</div>
+@if($order->status === 'confirmed')
+    <div class="alert alert-success" data-aos="fade-up">
+        <i class="fas fa-check-circle me-2"></i>Pembayaran berhasil diverifikasi. Silakan download tiket Anda.
+    </div>
+@elseif($order->status === 'pending')
+    <div class="alert alert-warning" data-aos="fade-up">
+        <i class="fas fa-clock me-2"></i>Pembayaran Anda sedang diverifikasi oleh admin. Mohon tunggu konfirmasi.
+    </div>
+@elseif($order->status === 'rejected')
+    <div class="alert alert-danger" data-aos="fade-up">
+        <i class="fas fa-times-circle me-2"></i>Pembayaran Anda ditolak. Silakan hubungi admin untuk informasi lebih lanjut.
+    </div>
+@endif
 
 <div class="row g-3">
     @foreach($order->items as $item)
@@ -28,14 +44,20 @@
                     <div class="d-flex justify-content-between"><small>Harga</small><strong>Rp {{ number_format($item->price, 0, ',', '.') }}</strong></div>
                 </div>
 
-                <div class="d-grid gap-2">
-                    <a href="{{ route('user.tickets.pdf', $item->id) }}" class="btn btn-primary" target="_blank">
-                        <i class="fas fa-file-pdf me-1"></i>Download PDF
-                    </a>
-                    <a href="{{ route('user.tickets.pdf', $item->id) }}" class="btn btn-outline-primary" target="_blank">
-                        <i class="fas fa-print me-1"></i>Print Tiket
-                    </a>
-                </div>
+                @if($order->status === 'confirmed')
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('user.tickets.pdf', $item->id) }}" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-file-pdf me-1"></i>Download PDF
+                        </a>
+                        <a href="{{ route('user.tickets.pdf', $item->id) }}" class="btn btn-outline-primary" target="_blank">
+                            <i class="fas fa-print me-1"></i>Print Tiket
+                        </a>
+                    </div>
+                @else
+                    <div class="alert alert-info mb-0 text-center">
+                        <small><i class="fas fa-info-circle me-1"></i>Tiket dapat didownload setelah pembayaran dikonfirmasi</small>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -44,12 +66,41 @@
 
 <div class="card mt-4" data-aos="fade-up">
     <div class="card-body">
-        <h5 class="mb-3"><i class="fas fa-circle-info me-2"></i>Informasi Penggunaan</h5>
-        <ul class="mb-0">
-            <li>Simpan tiket digital sampai waktu kunjungan selesai.</li>
-            <li>Tunjukkan kode tiket atau QR kepada petugas di pintu masuk.</li>
-            <li>Tiket berlaku sesuai tanggal kunjungan yang dipilih.</li>
-        </ul>
+        <h5 class="mb-3"><i class="fas fa-circle-info me-2"></i>
+            @if($order->status === 'confirmed')
+                Informasi Penggunaan
+            @else
+                Informasi Pesanan
+            @endif
+        </h5>
+        @if($order->status === 'confirmed')
+            <ul class="mb-0">
+                <li>Simpan tiket digital sampai waktu kunjungan selesai.</li>
+                <li>Tunjukkan kode tiket atau QR kepada petugas di pintu masuk.</li>
+                <li>Tiket berlaku sesuai tanggal kunjungan yang dipilih.</li>
+            </ul>
+        @elseif($order->status === 'pending')
+            <ul class="mb-0">
+                <li>Bukti pembayaran Anda telah diterima dan sedang diverifikasi.</li>
+                <li>Proses verifikasi biasanya memakan waktu 1x24 jam.</li>
+                <li>Anda akan menerima notifikasi setelah pembayaran dikonfirmasi.</li>
+                <li>Tiket dapat didownload setelah pembayaran dikonfirmasi oleh admin.</li>
+            </ul>
+        @elseif($order->status === 'rejected')
+            <ul class="mb-0">
+                <li>Pembayaran Anda tidak dapat diverifikasi.</li>
+                <li>Silakan hubungi admin untuk informasi lebih lanjut.</li>
+                <li>Anda dapat mengupload ulang bukti pembayaran yang benar.</li>
+            </ul>
+        @endif
     </div>
 </div>
+
+@if($order->status === 'rejected')
+    <div class="text-center mt-4">
+        <a href="{{ route('user.tickets.payment', $order->order_code) }}" class="btn btn-warning">
+            <i class="fas fa-upload me-2"></i>Upload Ulang Bukti Pembayaran
+        </a>
+    </div>
+@endif
 @endsection
