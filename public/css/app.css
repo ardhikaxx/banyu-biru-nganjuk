@@ -919,7 +919,23 @@ textarea.form-control {
 .admin-body > *:not(.admin-backdrop),
 .auth-body > *:not(.auth-backdrop) {
     position: relative;
-    z-index: 1;
+    z-index: auto;
+}
+
+/* Navbar should be on top */
+.site-navbar {
+    position: sticky;
+    top: 0.85rem;
+    z-index: 9999 !important;
+    margin: 0.85rem auto 0;
+    width: calc(100% - 2rem);
+    max-width: 1240px;
+    border: 1px solid rgba(16, 38, 50, 0.08);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.86) !important;
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-2);
+    padding: 0.7rem 0;
 }
 
 .site-backdrop .orb,
@@ -958,20 +974,6 @@ textarea.form-control {
     left: 30%;
     bottom: -170px;
     background: radial-gradient(circle, rgba(234, 88, 12, 0.2), rgba(234, 88, 12, 0));
-}
-.site-navbar {
-    position: sticky;
-    top: 0.85rem;
-    z-index: 9999;
-    margin: 0.85rem auto 0;
-    width: calc(100% - 2rem);
-    max-width: 1240px;
-    border: 1px solid rgba(16, 38, 50, 0.08);
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.86) !important;
-    backdrop-filter: blur(14px);
-    box-shadow: var(--shadow-2);
-    padding: 0.7rem 0;
 }
 
 .navbar-brand {
