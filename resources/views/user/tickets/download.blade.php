@@ -223,7 +223,7 @@
     </div>
 @endif
 
-<div class="row g-3">
+<div class="d-flex justify-content-center align-item-center">
     @foreach($order->items as $item)
     <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 90 }}">
         <div class="ticket-preview h-100">
