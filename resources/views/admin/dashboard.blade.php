@@ -72,7 +72,7 @@
                 <div class="stat-value">Rp {{ number_format($monthlyRevenue, 0, ',', '.') }}</div>
                 <div class="stat-label">Total Pendapatan</div>
                 <small class="text-muted mt-2 d-block" style="font-size: 0.75rem;">
-                    <i class="fas fa-wallet me-1"></i>Potensi revenue
+                    <i class="fas fa-check-circle me-1"></i>Pembayaran terkonfirmasi
                 </small>
             </div>
         </div>
