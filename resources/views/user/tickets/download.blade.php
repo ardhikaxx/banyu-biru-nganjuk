@@ -5,18 +5,18 @@
 @push('styles')
 <style>
     .ticket-preview {
-        border: 4px solid #0f766e;
-        border-radius: 20px;
+        border: 5px solid #0f766e;
+        border-radius: 24px;
         overflow: hidden;
         background: white;
-        box-shadow: 0 15px 40px rgba(15, 118, 110, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 20px 60px rgba(15, 118, 110, 0.25);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
     }
     
     .ticket-preview:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 50px rgba(15, 118, 110, 0.35);
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 30px 80px rgba(15, 118, 110, 0.4);
     }
     
     .ticket-preview::before {
@@ -27,28 +27,45 @@
         width: 100%;
         height: 100%;
         background: url('/images/background.jpg') center/cover;
-        opacity: 0.04;
+        opacity: 0.03;
         z-index: 0;
     }
     
+    /* Header dengan wave animation */
     .ticket-header {
-        background: #0f766e;
+        background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
         color: white;
         text-align: center;
-        padding: 25px 20px;
+        padding: 35px 25px 45px 25px;
         position: relative;
-        border-bottom: 5px solid #14b8a6;
+        overflow: hidden;
     }
     
     .ticket-header::before {
         content: '';
         position: absolute;
         top: 0;
+        left: -50%;
+        width: 200%;
+        height: 100%;
+        background: radial-gradient(circle at 30% 50%, rgba(20, 184, 166, 0.3) 0%, transparent 50%);
+        animation: wave 15s ease-in-out infinite;
+    }
+    
+    .ticket-header::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
         left: 0;
         width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, transparent 100%);
-        z-index: 0;
+        height: 35px;
+        background: white;
+        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    
+    @keyframes wave {
+        0%, 100% { transform: translateX(0) translateY(0); }
+        50% { transform: translateX(10%) translateY(-5%); }
     }
     
     .ticket-header-content {
@@ -56,43 +73,90 @@
         z-index: 1;
     }
     
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .header-icon-inner {
+        width: 28px;
+        height: 28px;
+        background: white;
+        border-radius: 50%;
+    }
+    
     .ticket-header h5 {
-        font-size: 24px;
-        font-weight: 800;
+        font-size: 28px;
+        font-weight: 900;
         margin: 0 0 8px 0;
-        letter-spacing: 3px;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        letter-spacing: 4px;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
         color: #ffffff;
+        text-transform: uppercase;
     }
     
     .ticket-header small {
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 600;
         color: #ccfbf1;
-        letter-spacing: 0.5px;
+        letter-spacing: 1.5px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     
+    /* QR Section horizontal layout */
     .ticket-qr-section {
-        text-align: center;
-        padding: 25px 20px;
-        background: #f0fdfa;
-        border-radius: 16px;
-        border: 3px solid #14b8a6;
-        margin: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 25px;
+        background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+        border-radius: 20px;
+        border: 4px dashed #14b8a6;
+        margin: 25px;
         position: relative;
+        gap: 20px;
     }
     
     .ticket-qr-section::before {
         content: '';
         position: absolute;
-        top: -3px;
-        left: -3px;
-        right: -3px;
-        bottom: -3px;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
         background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
-        border-radius: 16px;
+        border-radius: 20px;
         z-index: -1;
-        opacity: 0.1;
+        opacity: 0.08;
+    }
+    
+    .qr-left {
+        flex: 1;
+        text-align: center;
+        padding-right: 15px;
+    }
+    
+    .qr-right {
+        flex: 1;
+        text-align: center;
+        padding-left: 15px;
+        border-left: 3px solid #14b8a6;
+    }
+    
+    .qr-label {
+        font-size: 11px;
+        color: #0f766e;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
     .qr-wrapper {
@@ -101,39 +165,46 @@
         border-radius: 12px;
         display: inline-block;
         box-shadow: 0 6px 20px rgba(15, 118, 110, 0.25);
-        margin-bottom: 12px;
-        border: 3px solid #0f766e;
+        border: 4px solid #0f766e;
     }
     
     .ticket-code-display {
-        font-size: 20px;
-        font-weight: 800;
+        font-size: 18px;
+        font-weight: 900;
         letter-spacing: 3px;
         color: #0f766e;
-        padding: 8px 16px;
+        padding: 10px 15px;
         background: white;
         border-radius: 10px;
         display: inline-block;
-        margin-top: 8px;
-        border: 2px solid #14b8a6;
+        margin-top: 10px;
+        border: 3px solid #14b8a6;
         box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
+    }
+    
+    .divider-line {
+        height: 4px;
+        background: linear-gradient(90deg, transparent 0%, #14b8a6 20%, #0f766e 50%, #14b8a6 80%, transparent 100%);
+        margin: 20px 25px;
+        border-radius: 2px;
     }
     
     .ticket-info-box {
         background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%);
-        border-radius: 16px;
-        padding: 20px;
-        margin: 20px;
+        border-radius: 20px;
+        padding: 25px;
+        margin: 25px;
         position: relative;
         z-index: 1;
-        border: 2px solid #ccfbf1;
+        border: 3px solid #ccfbf1;
+        box-shadow: 0 4px 15px rgba(15, 118, 110, 0.08);
     }
     
     .ticket-info-row {
         display: flex;
         justify-content: space-between;
-        padding: 12px 0;
-        border-bottom: 2px solid #e0f2fe;
+        padding: 14px 0;
+        border-bottom: 3px solid #e0f2fe;
     }
     
     .ticket-info-row:last-child {
@@ -143,7 +214,9 @@
     .ticket-info-label {
         font-size: 13px;
         color: #0f766e;
-        font-weight: 700;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .ticket-info-value {
@@ -157,27 +230,46 @@
         color: #0f766e;
         font-size: 16px;
         background: #ccfbf1;
-        padding: 4px 10px;
-        border-radius: 6px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 900;
+        border: 2px solid #14b8a6;
     }
     
     .ticket-corners {
         position: absolute;
-        width: 30px;
-        height: 30px;
-        border: 4px solid #14b8a6;
+        width: 40px;
+        height: 40px;
+        border: 5px solid #14b8a6;
         z-index: 2;
     }
     
-    .corner-tl { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 20px 0 0 0; }
-    .corner-tr { top: 0; right: 0; border-left: none; border-bottom: none; border-radius: 0 20px 0 0; }
-    .corner-bl { bottom: 0; left: 0; border-right: none; border-top: none; border-radius: 0 0 0 20px; }
-    .corner-br { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 20px 0; }
+    .corner-tl { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 24px 0 0 0; }
+    .corner-tr { top: 0; right: 0; border-left: none; border-bottom: none; border-radius: 0 24px 0 0; }
+    .corner-bl { bottom: 0; left: 0; border-right: none; border-top: none; border-radius: 0 0 0 24px; }
+    .corner-br { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 24px 0; }
     
-    .divider-line {
-        height: 3px;
-        background: linear-gradient(90deg, transparent 0%, #14b8a6 50%, transparent 100%);
-        margin: 15px 20px;
+    /* Responsive untuk mobile */
+    @media (max-width: 576px) {
+        .ticket-qr-section {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .qr-left, .qr-right {
+            padding: 0;
+            border-left: none;
+        }
+        
+        .qr-right {
+            border-top: 3px solid #14b8a6;
+            padding-top: 15px;
+        }
+        
+        .ticket-code-display {
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
     }
 </style>
 @endpush
@@ -221,23 +313,32 @@
             <!-- Header -->
             <div class="ticket-header">
                 <div class="ticket-header-content">
+                    <div class="header-icon">
+                        <div class="header-icon-inner"></div>
+                    </div>
                     <h5>BANYU BIRU</h5>
                     <small>Pemandian Air Panas Nganjuk</small>
                 </div>
             </div>
             
-            <!-- QR Section -->
+            <!-- QR Section dengan layout horizontal -->
             <div class="ticket-qr-section">
-                <div class="qr-wrapper">
-                    @if(file_exists(public_path($item->qr_code_path)))
-                        <img src="{{ asset($item->qr_code_path) }}" style="width: 110px; height: 110px;" alt="QR Code">
-                    @else
-                        <div style="width: 110px; height: 110px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-                            <i class="fas fa-qrcode" style="font-size: 45px; color: #9ca3af;"></i>
-                        </div>
-                    @endif
+                <div class="qr-left">
+                    <div class="qr-label">Scan QR Code</div>
+                    <div class="qr-wrapper">
+                        @if(file_exists(public_path($item->qr_code_path)))
+                            <img src="{{ asset($item->qr_code_path) }}" style="width: 100px; height: 100px; display: block;" alt="QR Code">
+                        @else
+                            <div style="width: 100px; height: 100px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                                <i class="fas fa-qrcode" style="font-size: 45px; color: #9ca3af;"></i>
+                            </div>
+                        @endif
+                    </div>
                 </div>
-                <div class="ticket-code-display">{{ $item->ticket_code }}</div>
+                <div class="qr-right">
+                    <div class="qr-label">Kode Tiket</div>
+                    <div class="ticket-code-display">{{ $item->ticket_code }}</div>
+                </div>
             </div>
             
             <div class="divider-line"></div>

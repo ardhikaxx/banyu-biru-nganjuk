@@ -17,17 +17,17 @@
         
         .ticket-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             position: relative;
         }
         
         .ticket-box { 
-            border: 4px solid #0f766e;
-            border-radius: 20px;
+            border: 5px solid #0f766e;
+            border-radius: 24px;
             overflow: hidden;
             background: white;
-            box-shadow: 0 15px 40px rgba(15, 118, 110, 0.3);
+            box-shadow: 0 20px 60px rgba(15, 118, 110, 0.4);
             position: relative;
         }
         
@@ -37,7 +37,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.04;
+            opacity: 0.03;
             z-index: 0;
         }
         
@@ -46,24 +46,41 @@
             z-index: 1;
         }
         
+        /* Header dengan wave pattern */
         .header { 
-            background: #0f766e;
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
             color: white;
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 30px 50px 30px;
             position: relative;
-            border-bottom: 5px solid #14b8a6;
+            overflow: hidden;
         }
         
         .header::before {
             content: '';
             position: absolute;
             top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(20, 184, 166, 0.3) 0%, transparent 50%);
+            animation: wave 15s ease-in-out infinite;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, transparent 100%);
-            z-index: 0;
+            height: 40px;
+            background: white;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(10%) translateY(-5%); }
         }
         
         .header-content {
@@ -71,88 +88,144 @@
             z-index: 1;
         }
         
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .header-icon-inner {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+        }
+        
         .header h1 {
-            font-size: 40px;
-            font-weight: bold;
-            margin: 0 0 10px 0;
-            letter-spacing: 4px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            font-size: 48px;
+            font-weight: 900;
+            margin: 0 0 12px 0;
+            letter-spacing: 6px;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
             color: #ffffff;
+            text-transform: uppercase;
         }
         
         .header p {
-            font-size: 16px;
+            font-size: 18px;
             margin: 0;
             font-weight: 600;
             color: #ccfbf1;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .ticket-body {
-            padding: 35px 30px 30px 30px;
+            padding: 40px 35px 35px 35px;
         }
         
+        /* QR Section dengan layout horizontal */
         .qr-section { 
-            text-align: center;
-            margin: 0 0 30px 0;
-            padding: 25px;
-            background: #f0fdfa;
-            border-radius: 16px;
-            border: 3px solid #14b8a6;
+            display: table;
+            width: 100%;
+            margin: 0 0 35px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+            border-radius: 20px;
+            border: 4px dashed #14b8a6;
             position: relative;
         }
         
         .qr-section::before {
             content: '';
             position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
             background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
-            border-radius: 16px;
+            border-radius: 20px;
             z-index: -1;
-            opacity: 0.1;
+            opacity: 0.08;
+        }
+        
+        .qr-left {
+            display: table-cell;
+            width: 50%;
+            vertical-align: middle;
+            text-align: center;
+            padding-right: 20px;
+        }
+        
+        .qr-right {
+            display: table-cell;
+            width: 50%;
+            vertical-align: middle;
+            text-align: center;
+            padding-left: 20px;
+            border-left: 3px solid #14b8a6;
         }
         
         .qr-code-wrapper {
             background: white;
-            padding: 18px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 16px;
             display: inline-block;
-            box-shadow: 0 6px 20px rgba(15, 118, 110, 0.25);
-            margin-bottom: 15px;
-            border: 3px solid #0f766e;
+            box-shadow: 0 8px 25px rgba(15, 118, 110, 0.3);
+            border: 4px solid #0f766e;
+        }
+        
+        .qr-label {
+            font-size: 13px;
+            color: #0f766e;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .ticket-code { 
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 4px;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 5px;
             color: #0f766e;
-            margin-top: 10px;
-            padding: 10px 20px;
+            padding: 15px 25px;
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             display: inline-block;
-            border: 2px solid #14b8a6;
-            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
+            border: 3px solid #14b8a6;
+            box-shadow: 0 6px 20px rgba(15, 118, 110, 0.2);
+            margin-top: 10px;
+        }
+        
+        .divider {
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, #14b8a6 20%, #0f766e 50%, #14b8a6 80%, transparent 100%);
+            margin: 30px 0;
+            border-radius: 2px;
         }
         
         .info-section {
             background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 2px solid #ccfbf1;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 3px solid #ccfbf1;
+            box-shadow: 0 4px 15px rgba(15, 118, 110, 0.08);
         }
         
         .info-row { 
             display: table;
             width: 100%;
-            margin: 15px 0;
-            padding: 12px 0;
-            border-bottom: 2px solid #e0f2fe;
+            margin: 18px 0;
+            padding: 15px 0;
+            border-bottom: 3px solid #e0f2fe;
         }
         
         .info-row:last-child {
@@ -163,104 +236,105 @@
         .info-label {
             display: table-cell;
             width: 45%;
-            font-size: 14px;
+            font-size: 15px;
             color: #0f766e;
-            font-weight: 700;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .info-value {
             display: table-cell;
             width: 55%;
-            font-size: 15px;
+            font-size: 16px;
             color: #111827;
-            font-weight: bold;
+            font-weight: 700;
             text-align: right;
         }
         
         .price-highlight {
             color: #0f766e;
-            font-size: 18px;
+            font-size: 20px;
             background: #ccfbf1;
-            padding: 5px 12px;
-            border-radius: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 900;
+            border: 2px solid #14b8a6;
         }
         
         .footer-note {
             text-align: center;
             color: #0f766e;
-            font-size: 12px;
-            margin-top: 25px;
-            padding: 18px;
-            background: #fef3c7;
-            border-radius: 12px;
-            border: 3px solid #fbbf24;
+            font-size: 13px;
+            margin-top: 30px;
+            padding: 22px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 16px;
+            border: 4px solid #fbbf24;
             font-weight: 600;
+            line-height: 1.6;
         }
         
         .footer-note strong {
             color: #92400e;
             display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .watermark { 
             position: fixed;
-            opacity: 0.02;
-            font-size: 100px;
+            opacity: 0.015;
+            font-size: 120px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
-            font-weight: bold;
+            font-weight: 900;
             color: #0f766e;
             z-index: 0;
-            letter-spacing: 10px;
+            letter-spacing: 15px;
         }
         
         .ticket-corner {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #14b8a6;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #14b8a6;
         }
         
         .corner-tl {
-            top: -4px;
-            left: -4px;
+            top: -5px;
+            left: -5px;
             border-right: none;
             border-bottom: none;
-            border-radius: 20px 0 0 0;
+            border-radius: 24px 0 0 0;
         }
         
         .corner-tr {
-            top: -4px;
-            right: -4px;
+            top: -5px;
+            right: -5px;
             border-left: none;
             border-bottom: none;
-            border-radius: 0 20px 0 0;
+            border-radius: 0 24px 0 0;
         }
         
         .corner-bl {
-            bottom: -4px;
-            left: -4px;
+            bottom: -5px;
+            left: -5px;
             border-right: none;
             border-top: none;
-            border-radius: 0 0 0 20px;
+            border-radius: 0 0 0 24px;
         }
         
         .corner-br {
-            bottom: -4px;
-            right: -4px;
+            bottom: -5px;
+            right: -5px;
             border-left: none;
             border-top: none;
-            border-radius: 0 0 20px 0;
-        }
-        
-        .divider {
-            height: 3px;
-            background: linear-gradient(90deg, transparent 0%, #14b8a6 50%, transparent 100%);
-            margin: 20px 0;
+            border-radius: 0 0 24px 0;
         }
     </style>
 </head>
@@ -284,6 +358,9 @@
                 <!-- Header -->
                 <div class="header">
                     <div class="header-content">
+                        <div class="header-icon">
+                            <div class="header-icon-inner"></div>
+                        </div>
                         <h1>BANYU BIRU</h1>
                         <p>Pemandian Air Panas Nganjuk</p>
                     </div>
@@ -291,14 +368,20 @@
                 
                 <!-- Body -->
                 <div class="ticket-body">
-                    <!-- QR Code Section -->
+                    <!-- QR Code Section dengan layout horizontal -->
                     <div class="qr-section">
-                        <div class="qr-code-wrapper">
-                            @if(file_exists(public_path($item->qr_code_path)))
-                                <img src="{{ public_path($item->qr_code_path) }}" style="height:150px; width:150px;" alt="QR Code">
-                            @endif
+                        <div class="qr-left">
+                            <div class="qr-label">Scan QR Code</div>
+                            <div class="qr-code-wrapper">
+                                @if(file_exists(public_path($item->qr_code_path)))
+                                    <img src="{{ public_path($item->qr_code_path) }}" style="height:160px; width:160px; display:block;" alt="QR Code">
+                                @endif
+                            </div>
                         </div>
-                        <div class="ticket-code">{{ $item->ticket_code }}</div>
+                        <div class="qr-right">
+                            <div class="qr-label">Kode Tiket</div>
+                            <div class="ticket-code">{{ $item->ticket_code }}</div>
+                        </div>
                     </div>
                     
                     <div class="divider"></div>
