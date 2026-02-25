@@ -189,12 +189,16 @@ Akses aplikasi di: `http://127.0.0.1:8000`
 ## 👤 Default Login
 
 ### Admin
-- **Email**: admin@example.com
+- **Email**: admin@banyubiru.com
 - **Password**: password
 
-### User
-- **Email**: user@example.com
+### User (Demo)
+Seeder membuat 8 user demo dengan kredensial:
+- **Email**: pengguna1@banyubiru.test sampai pengguna8@banyubiru.test
 - **Password**: password
+- **Contoh**: 
+  - Email: pengguna1@banyubiru.test
+  - Password: password
 
 > ⚠️ **Penting**: Ubah password default setelah login pertama kali!
 
