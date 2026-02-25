@@ -330,6 +330,14 @@
     function startScanner() {
         if (isScanning) return;
 
+        // Show scanner, hide result if exists
+        document.getElementById('qr-reader').style.display = 'block';
+        document.querySelector('.scan-instruction').style.display = 'block';
+        const scanAgainBtn = document.getElementById('scanAgainBtn');
+        if (scanAgainBtn) {
+            scanAgainBtn.style.display = 'none';
+        }
+
         html5QrCode = new Html5Qrcode("qr-reader");
         
         html5QrCode.start(
@@ -343,8 +351,9 @@
                 // QR code berhasil di-scan
                 console.log(`QR Code detected: ${decodedText}`);
                 
-                // Stop scanner
+                // Stop scanner dan hide kamera
                 stopScanner();
+                hideCameraShowResult();
                 
                 // Submit form dengan kode yang di-scan
                 submitTicketCode(decodedText);
@@ -368,6 +377,28 @@
             }).catch((err) => {
                 console.error('Error stopping scanner:', err);
             });
+        }
+    }
+
+    function hideCameraShowResult() {
+        // Hide kamera dan instruksi
+        document.getElementById('qr-reader').style.display = 'none';
+        document.querySelector('.scan-instruction').style.display = 'none';
+        
+        // Show tombol scan lagi jika belum ada
+        let scanAgainBtn = document.getElementById('scanAgainBtn');
+        if (!scanAgainBtn) {
+            scanAgainBtn = document.createElement('div');
+            scanAgainBtn.id = 'scanAgainBtn';
+            scanAgainBtn.className = 'text-center mt-3';
+            scanAgainBtn.innerHTML = `
+                <div class="alert alert-info mb-3">
+                    <i class="fas fa-spinner fa-spin me-2"></i>Memproses QR Code...
+                </div>
+            `;
+            document.querySelector('.qr-scanner-container').appendChild(scanAgainBtn);
+        } else {
+            scanAgainBtn.style.display = 'block';
         }
     }
 
@@ -395,7 +426,28 @@
 
     // Start scanner on page load
     document.addEventListener('DOMContentLoaded', function() {
-        startScanner();
+        @if(session('ticketItem'))
+            // Jika ada hasil, tampilkan tombol scan lagi
+            const qrReader = document.getElementById('qr-reader');
+            const scanInstruction = document.querySelector('.scan-instruction');
+            if (qrReader) qrReader.style.display = 'none';
+            if (scanInstruction) scanInstruction.style.display = 'none';
+            
+            let scanAgainBtn = document.getElementById('scanAgainBtn');
+            if (!scanAgainBtn) {
+                scanAgainBtn = document.createElement('div');
+                scanAgainBtn.id = 'scanAgainBtn';
+                scanAgainBtn.className = 'text-center mt-3';
+                scanAgainBtn.innerHTML = `
+                    <button class="btn btn-primary btn-lg" onclick="startScanner()">
+                        <i class="fas fa-qrcode me-2"></i>Scan Lagi
+                    </button>
+                `;
+                document.querySelector('.qr-scanner-container').appendChild(scanAgainBtn);
+            }
+        @else
+            startScanner();
+        @endif
     });
 
     // Stop scanner when leaving page
