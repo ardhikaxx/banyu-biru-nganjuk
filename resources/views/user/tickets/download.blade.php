@@ -5,272 +5,195 @@
 @push('styles')
 <style>
     .ticket-preview {
-        border: 5px solid #0f766e;
+        background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
         border-radius: 24px;
-        overflow: hidden;
-        background: white;
-        box-shadow: 0 20px 60px rgba(15, 118, 110, 0.25);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 35px 30px;
+        box-shadow: 0 15px 40px rgba(15, 118, 110, 0.12);
+        transition: all 0.3s ease;
         position: relative;
     }
     
     .ticket-preview:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 30px 80px rgba(15, 118, 110, 0.4);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(15, 118, 110, 0.2);
     }
     
-    .ticket-preview::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('/images/background.jpg') center/cover;
-        opacity: 0.03;
-        z-index: 0;
-    }
-    
-    /* Header dengan wave animation */
+    /* Header Section */
     .ticket-header {
-        background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
-        color: white;
-        text-align: center;
-        padding: 35px 25px 45px 25px;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .ticket-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -50%;
-        width: 200%;
-        height: 100%;
-        background: radial-gradient(circle at 30% 50%, rgba(20, 184, 166, 0.3) 0%, transparent 50%);
-        animation: wave 15s ease-in-out infinite;
-    }
-    
-    .ticket-header::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 35px;
-        background: white;
-        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    }
-    
-    @keyframes wave {
-        0%, 100% { transform: translateX(0) translateY(0); }
-        50% { transform: translateX(10%) translateY(-5%); }
-    }
-    
-    .ticket-header-content {
-        position: relative;
-        z-index: 1;
-    }
-    
-    .header-icon {
-        width: 50px;
-        height: 50px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 12px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .header-icon-inner {
-        width: 28px;
-        height: 28px;
-        background: white;
-        border-radius: 50%;
-    }
-    
-    .ticket-header h5 {
-        font-size: 28px;
-        font-weight: 900;
-        margin: 0 0 8px 0;
-        letter-spacing: 4px;
-        text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
-        color: #ffffff;
-        text-transform: uppercase;
-    }
-    
-    .ticket-header small {
-        font-size: 14px;
-        font-weight: 600;
-        color: #ccfbf1;
-        letter-spacing: 1.5px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    
-    /* QR Section horizontal layout */
-    .ticket-qr-section {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        padding: 25px;
-        background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
-        border-radius: 20px;
-        border: 4px dashed #14b8a6;
-        margin: 25px;
-        position: relative;
-        gap: 20px;
+        align-items: flex-start;
+        margin-bottom: 25px;
     }
     
-    .ticket-qr-section::before {
-        content: '';
-        position: absolute;
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
-        border-radius: 20px;
-        z-index: -1;
-        opacity: 0.08;
-    }
-    
-    .qr-left {
+    .header-left {
         flex: 1;
-        text-align: center;
-        padding-right: 15px;
     }
     
-    .qr-right {
-        flex: 1;
+    .header-right {
+        text-align: right;
+    }
+    
+    .brand-name {
+        font-size: 26px;
+        font-weight: 900;
+        color: #0f766e;
+        letter-spacing: 1.5px;
+        margin-bottom: 3px;
+    }
+    
+    .brand-subtitle {
+        font-size: 12px;
+        color: #0f766e;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+    
+    .ticket-type {
+        font-size: 10px;
+        color: #64748b;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 2px;
+    }
+    
+    .ticket-name {
+        font-size: 14px;
+        color: #0f766e;
+        font-weight: 800;
+    }
+    
+    /* Destination Section */
+    .destination-section {
         text-align: center;
-        padding-left: 15px;
-        border-left: 3px solid #14b8a6;
+        margin-bottom: 30px;
+    }
+    
+    .destination-code {
+        font-size: 40px;
+        font-weight: 900;
+        color: #0f766e;
+        letter-spacing: 6px;
+        margin-bottom: 6px;
+    }
+    
+    .destination-detail {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 600;
+    }
+    
+    /* QR Section */
+    .ticket-qr-section {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 22px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(15, 118, 110, 0.08);
     }
     
     .qr-label {
-        font-size: 11px;
-        color: #0f766e;
+        font-size: 10px;
+        color: #64748b;
         font-weight: 700;
-        margin-bottom: 10px;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.8px;
+        margin-bottom: 12px;
     }
     
     .qr-wrapper {
-        background: white;
-        padding: 15px;
-        border-radius: 12px;
         display: inline-block;
-        box-shadow: 0 6px 20px rgba(15, 118, 110, 0.25);
-        border: 4px solid #0f766e;
+        padding: 12px;
+        background: white;
+        border: 3px solid #e0f2fe;
+        border-radius: 12px;
     }
     
     .ticket-code-display {
-        font-size: 18px;
-        font-weight: 900;
-        letter-spacing: 3px;
-        color: #0f766e;
-        padding: 10px 15px;
-        background: white;
-        border-radius: 10px;
-        display: inline-block;
-        margin-top: 10px;
-        border: 3px solid #14b8a6;
-        box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
+        font-size: 15px;
+        font-weight: 700;
+        color: #64748b;
+        letter-spacing: 2.5px;
+        margin-top: 12px;
     }
     
-    .divider-line {
-        height: 4px;
-        background: linear-gradient(90deg, transparent 0%, #14b8a6 20%, #0f766e 50%, #14b8a6 80%, transparent 100%);
-        margin: 20px 25px;
-        border-radius: 2px;
-    }
-    
+    /* Info Grid */
     .ticket-info-box {
-        background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%);
-        border-radius: 20px;
-        padding: 25px;
-        margin: 25px;
-        position: relative;
-        z-index: 1;
-        border: 3px solid #ccfbf1;
-        box-shadow: 0 4px 15px rgba(15, 118, 110, 0.08);
+        margin-bottom: 15px;
     }
     
     .ticket-info-row {
         display: flex;
         justify-content: space-between;
-        padding: 14px 0;
-        border-bottom: 3px solid #e0f2fe;
+        padding: 15px 0;
+        border-bottom: 2px solid #e0f2fe;
     }
     
     .ticket-info-row:last-child {
         border-bottom: none;
     }
     
-    .ticket-info-label {
-        font-size: 13px;
-        color: #0f766e;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+    .info-column {
+        flex: 1;
     }
     
-    .ticket-info-value {
-        font-size: 14px;
-        color: #111827;
-        font-weight: 700;
+    .info-column:last-child {
         text-align: right;
     }
     
-    .price-highlight {
-        color: #0f766e;
-        font-size: 16px;
-        background: #ccfbf1;
-        padding: 6px 12px;
-        border-radius: 8px;
-        font-weight: 900;
-        border: 2px solid #14b8a6;
+    .ticket-info-label {
+        font-size: 10px;
+        color: #64748b;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 4px;
+        display: block;
     }
     
+    .ticket-info-value {
+        font-size: 16px;
+        color: #0f766e;
+        font-weight: 800;
+    }
+    
+    .ticket-info-value-large {
+        font-size: 20px;
+        color: #0f766e;
+        font-weight: 900;
+    }
+    
+    /* Footer Note */
+    .footer-note-simple {
+        text-align: center;
+        font-size: 10px;
+        color: #64748b;
+        line-height: 1.5;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 2px dashed #cbd5e1;
+    }
+    
+    .footer-note-simple strong {
+        color: #0f766e;
+        font-weight: 800;
+    }
+    
+    /* Decorative Corners */
     .ticket-corners {
         position: absolute;
-        width: 40px;
-        height: 40px;
-        border: 5px solid #14b8a6;
+        width: 18px;
+        height: 18px;
+        border: 3px solid #0f766e;
         z-index: 2;
     }
     
-    .corner-tl { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 24px 0 0 0; }
-    .corner-tr { top: 0; right: 0; border-left: none; border-bottom: none; border-radius: 0 24px 0 0; }
-    .corner-bl { bottom: 0; left: 0; border-right: none; border-top: none; border-radius: 0 0 0 24px; }
-    .corner-br { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 24px 0; }
-    
-    /* Responsive untuk mobile */
-    @media (max-width: 576px) {
-        .ticket-qr-section {
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .qr-left, .qr-right {
-            padding: 0;
-            border-left: none;
-        }
-        
-        .qr-right {
-            border-top: 3px solid #14b8a6;
-            padding-top: 15px;
-        }
-        
-        .ticket-code-display {
-            font-size: 16px;
-            letter-spacing: 2px;
-        }
-    }
+    .corner-tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+    .corner-tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+    .corner-bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+    .corner-br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
 </style>
 @endpush
 
@@ -312,51 +235,55 @@
             
             <!-- Header -->
             <div class="ticket-header">
-                <div class="ticket-header-content">
-                    <div class="header-icon">
-                        <div class="header-icon-inner"></div>
-                    </div>
-                    <h5>BANYU BIRU</h5>
-                    <small>Pemandian Air Panas Nganjuk</small>
+                <div class="header-left">
+                    <div class="brand-name">BANYU BIRU</div>
+                    <div class="brand-subtitle">Pemandian Air Panas Nganjuk</div>
+                </div>
+                <div class="header-right">
+                    <div class="ticket-type">Tiket</div>
+                    <div class="ticket-name">{{ $item->ticket->name }}</div>
                 </div>
             </div>
             
-            <!-- QR Section dengan layout horizontal -->
+            <!-- Destination Code -->
+            <div class="destination-section">
+                <div class="destination-code">WISATA</div>
+                <div class="destination-detail">{{ $order->visit_date->format('d F Y') }}</div>
+            </div>
+            
+            <!-- QR Section -->
             <div class="ticket-qr-section">
-                <div class="qr-left">
-                    <div class="qr-label">Scan QR Code</div>
-                    <div class="qr-wrapper">
-                        @if(file_exists(public_path($item->qr_code_path)))
-                            <img src="{{ asset($item->qr_code_path) }}" style="width: 100px; height: 100px; display: block;" alt="QR Code">
-                        @else
-                            <div style="width: 100px; height: 100px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-                                <i class="fas fa-qrcode" style="font-size: 45px; color: #9ca3af;"></i>
-                            </div>
-                        @endif
-                    </div>
+                <div class="qr-label">Scan untuk verifikasi</div>
+                <div class="qr-wrapper">
+                    @if(file_exists(public_path($item->qr_code_path)))
+                        <img src="{{ asset($item->qr_code_path) }}" style="width: 130px; height: 130px; display: block;" alt="QR Code">
+                    @else
+                        <div style="width: 130px; height: 130px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                            <i class="fas fa-qrcode" style="font-size: 50px; color: #9ca3af;"></i>
+                        </div>
+                    @endif
                 </div>
-                <div class="qr-right">
-                    <div class="qr-label">Kode Tiket</div>
-                    <div class="ticket-code-display">{{ $item->ticket_code }}</div>
-                </div>
+                <div class="ticket-code-display">{{ $item->ticket_code }}</div>
             </div>
             
-            <div class="divider-line"></div>
-            
-            <!-- Info -->
+            <!-- Info Grid -->
             <div class="ticket-info-box">
                 <div class="ticket-info-row">
-                    <span class="ticket-info-label">Jenis Tiket</span>
-                    <span class="ticket-info-value">{{ $item->ticket->name }}</span>
+                    <div class="info-column">
+                        <span class="ticket-info-label">Nama Pemesan</span>
+                        <div class="ticket-info-value">{{ $order->user->name }}</div>
+                    </div>
+                    <div class="info-column">
+                        <span class="ticket-info-label">Harga</span>
+                        <div class="ticket-info-value-large">Rp {{ number_format($item->price, 0, ',', '.') }}</div>
+                    </div>
                 </div>
-                <div class="ticket-info-row">
-                    <span class="ticket-info-label">Tanggal Kunjungan</span>
-                    <span class="ticket-info-value">{{ $order->visit_date->format('d M Y') }}</span>
-                </div>
-                <div class="ticket-info-row">
-                    <span class="ticket-info-label">Harga</span>
-                    <span class="ticket-info-value price-highlight">Rp {{ number_format($item->price, 0, ',', '.') }}</span>
-                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer-note-simple">
+                <strong>Tunjukkan tiket ini kepada petugas.</strong><br>
+                Tiket berlaku 1x kunjungan sesuai tanggal tertera.
             </div>
 
             <!-- Actions -->
