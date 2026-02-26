@@ -1,10 +1,6 @@
 # 🎫 Banyu Biru Ticketing & Booking System
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ardhikaxx/banyu-biru-nganjuk/main/banner.png" alt="Banyu Biru Banner" width="100%">
-</p>
-
-<p align="center">
   <a href="#-fitur-utama">
     <img src="https://img.shields.io/badge/Features-✨-FF6B6B?style=for-the-badge" alt="Features">
   </a>
