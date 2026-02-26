@@ -55,14 +55,4 @@
             <span class="menu-label">Manajemen Admin</span>
         </a>
     </div>
-
-    <div class="sidebar-footer border-top border-white-10">
-        <div class="sidebar-status">
-            <span class="status-dot"></span>
-            <div class="status-text">
-                <small>Status Sistem</small>
-                <strong>Semua layanan online</strong>
-            </div>
-        </div>
-    </div>
 </aside>
