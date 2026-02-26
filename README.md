@@ -10,9 +10,6 @@
   <a href="#-instalasi">
     <img src="https://img.shields.io/badge/Installation-🚀-45B7D1?style=for-the-badge" alt="Installation">
   </a>
-  <a href="#-dokumentasi">
-    <img src="https://img.shields.io/badge/Documentation-📄-96CEB4?style=for-the-badge" alt="Documentation">
-  </a>
   <a href="#-license">
     <img src="https://img.shields.io/badge/License-MIT-FFEAA7?style=for-the-badge" alt="License">
   </a>
