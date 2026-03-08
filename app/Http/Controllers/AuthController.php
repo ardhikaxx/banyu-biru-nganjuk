@@ -61,7 +61,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('user.tickets.index')->with('success', 'Registrasi berhasil.');
+        return redirect()->route('home')->with('success', 'Registrasi berhasil.');
     }
 
     public function logout(Request $request)
