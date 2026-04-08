@@ -6,6 +6,18 @@ use App\Http\Controllers\User;
 use App\Models\Place;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
+
+Route::get('/storage-file/{path}', function ($path) {
+    $fullPath = storage_path($path);
+    
+    if (!File::exists($fullPath)) {
+        abort(404);
+    }
+    
+    return Response::file($fullPath);
+})->where('path', '.*')->name('storage.show');
 
 Route::get('/', function () {
     $tickets = Ticket::where('is_active', true)

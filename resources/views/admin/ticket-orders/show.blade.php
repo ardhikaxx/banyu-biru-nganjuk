@@ -93,13 +93,35 @@
 
                     @if($order->payment_proof)
                         @php($proofPath = str_starts_with($order->payment_proof, 'payment-proofs/') ? $order->payment_proof : 'payment-proofs/'.$order->payment_proof)
-                        <hr class="my-4" style="border-color: var(--teal-100);">
-                        <a href="{{ asset($proofPath) }}" target="_blank" class="btn btn-outline-primary">
-                            <i class="fas fa-image me-2"></i>Lihat Bukti Pembayaran
-                        </a>
                     @endif
                 </div>
             </div>
+
+            @if($order->payment_proof)
+            <!-- Payment Proof Card -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0" style="font-weight: 700;">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Bukti Pembayaran
+                    </h6>
+                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#proofModal">
+                        <i class="fas fa-search-plus me-1"></i>Perbesar
+                    </button>
+                </div>
+                <div class="card-body text-center p-0 overflow-hidden" style="background: #f8fafc;">
+                    <div class="p-4">
+                        <img src="{{ storage_url($proofPath) }}" 
+                             alt="Bukti Pembayaran" 
+                             class="img-fluid rounded shadow-sm border cursor-pointer" 
+                             style="max-height: 400px; transition: transform 0.3s ease;"
+                             data-bs-toggle="modal" 
+                             data-bs-target="#proofModal"
+                             onmouseover="this.style.transform='scale(1.02)'"
+                             onmouseout="this.style.transform='scale(1)'">
+                    </div>
+                </div>
+            </div>
+            @endif
 
             <!-- Ticket Items Card -->
             <div class="card">
@@ -191,3 +213,36 @@
     </div>
 </div>
 @endsection
+
+@section('modals')
+    @if($order->payment_proof)
+    <!-- Payment Proof Zoom Modal -->
+    <div class="modal fade" id="proofModal" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius: 1rem; overflow: hidden; border: none; max-height: 90vh;">
+                <div class="modal-header border-0 bg-light">
+                    <h5 class="modal-title fw-bold" id="proofModalLabel">Detail Bukti Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0 bg-dark text-center d-flex align-items-center justify-content-center" style="overflow: hidden;">
+                    <img src="{{ storage_url($proofPath) }}" alt="Bukti Pembayaran Full" class="img-fluid" style="max-height: 70vh; object-fit: contain;">
+                </div>
+                <div class="modal-footer border-0 bg-light">
+                    <a href="{{ storage_url($proofPath) }}" download class="btn btn-primary btn-sm">
+                        <i class="fas fa-download me-2"></i>Download Gambar
+                    </a>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+@endsection
+
+@push('styles')
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
+@endpush

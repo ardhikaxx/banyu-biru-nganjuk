@@ -255,8 +255,8 @@
             <div class="ticket-qr-section">
                 <div class="qr-label">Scan untuk verifikasi</div>
                 <div class="qr-wrapper">
-                    @if(file_exists(public_path($item->qr_code_path)))
-                        <img src="{{ asset($item->qr_code_path) }}" style="width: 130px; height: 130px; display: block;" alt="QR Code">
+                    @if(file_exists(storage_path($item->qr_code_path)))
+                        <img src="{{ storage_url($item->qr_code_path) }}" style="width: 130px; height: 130px; display: block;" alt="QR Code">
                     @else
                         <div style="width: 130px; height: 130px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
                             <i class="fas fa-qrcode" style="font-size: 50px; color: #9ca3af;"></i>

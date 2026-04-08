@@ -268,8 +268,8 @@
             <div class="qr-section">
                 <div class="qr-label">Scan untuk verifikasi</div>
                 <div class="qr-code-wrapper">
-                    @if(file_exists(public_path($item->qr_code_path)))
-                        <img src="{{ public_path($item->qr_code_path) }}" style="width:180px; height:180px; display:block;" alt="QR Code">
+                    @if(file_exists(storage_path($item->qr_code_path)))
+                        <img src="{{ storage_path($item->qr_code_path) }}" style="width:180px; height:180px; display:block;" alt="QR Code">
                     @endif
                 </div>
                 <div class="ticket-code-text">{{ $item->ticket_code }}</div>

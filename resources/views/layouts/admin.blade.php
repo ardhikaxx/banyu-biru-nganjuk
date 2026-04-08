@@ -211,6 +211,7 @@
             });
         }
     </script>
+    @yield('modals')
     @stack('scripts')
 </body>
 </html>

@@ -77,7 +77,7 @@ class TicketController extends Controller
                 'status' => 'pending',
             ]);
 
-            $qrDirectory = public_path('qrcodes');
+            $qrDirectory = storage_path('qrcodes');
             if (! is_dir($qrDirectory)) {
                 mkdir($qrDirectory, 0755, true);
             }
@@ -88,7 +88,7 @@ class TicketController extends Controller
                     $ticketCode = generateUniqueCode('AT', TicketOrderItem::class, 'ticket_code');
                     $qrPath = 'qrcodes/'.$ticketCode.'.svg';
                     $qrImage = QrCode::format('svg')->size(320)->generate($ticketCode);
-                    file_put_contents(public_path($qrPath), $qrImage);
+                    file_put_contents(storage_path($qrPath), $qrImage);
 
                     TicketOrderItem::create([
                         'ticket_order_id' => $order->id,
@@ -130,7 +130,7 @@ class TicketController extends Controller
             'payment_proof' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
         ]);
 
-        $directory = public_path('payment-proofs');
+        $directory = storage_path('payment-proofs');
         if (! is_dir($directory)) {
             mkdir($directory, 0755, true);
         }

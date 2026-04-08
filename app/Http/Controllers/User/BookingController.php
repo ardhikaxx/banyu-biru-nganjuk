@@ -102,7 +102,7 @@ class BookingController extends Controller
             'payment_proof' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
         ]);
 
-        $directory = public_path('payment-proofs');
+        $directory = storage_path('payment-proofs');
         if (! is_dir($directory)) {
             mkdir($directory, 0755, true);
         }

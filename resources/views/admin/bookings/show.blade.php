@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 @section('title', 'Detail Booking')
 
 @section('content')
@@ -107,14 +107,6 @@
                         </div>
                         @endif
                     </div>
-
-                    @if($booking->payment_proof)
-                        @php($proofPath = str_starts_with($booking->payment_proof, 'payment-proofs/') ? $booking->payment_proof : 'payment-proofs/'.$booking->payment_proof)
-                        <hr class="my-4" style="border-color: var(--teal-100);">
-                        <a href="{{ asset($proofPath) }}" target="_blank" class="btn btn-outline-primary">
-                            <i class="fas fa-image me-2"></i>Lihat Bukti Pembayaran
-                        </a>
-                    @endif
                 </div>
             </div>
         </div>
@@ -171,7 +163,69 @@
                 </div>
             </div>
             @endif
+
+            @if($booking->payment_proof)
+            @php($proofPath = str_starts_with($booking->payment_proof, 'payment-proofs/') ? $booking->payment_proof : 'payment-proofs/'.$booking->payment_proof)
+            <div class="card mt-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0" style="font-weight: 700;">
+                        <i class="fas fa-image me-2"></i>Bukti Pembayaran
+                    </h6>
+                </div>
+                <div class="card-body text-center bg-light rounded-bottom p-4">
+                    <div class="proof-container position-relative d-inline-block">
+                        <img src="{{ storage_url($proofPath) }}" 
+                                alt="Bukti Pembayaran" 
+                                class="img-fluid rounded shadow-sm cursor-pointer" 
+                                style="max-height: 300px; border: 4px solid white; transition: transform 0.2s;"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#proofModal"
+                                onmouseover="this.style.transform='scale(1.02)'"
+                                onmouseout="this.style.transform='scale(1)'">
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#proofModal">
+                                <i class="fas fa-search-plus me-1"></i>Perbesar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
 @endsection
+
+@section('modals')
+    @if($booking->payment_proof)
+    @php($proofPath = str_starts_with($booking->payment_proof, 'payment-proofs/') ? $booking->payment_proof : 'payment-proofs/'.$booking->payment_proof)
+    <!-- Payment Proof Zoom Modal -->
+    <div class="modal fade" id="proofModal" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius: 1rem; overflow: hidden; border: none; max-height: 90vh;">
+                <div class="modal-header border-0 bg-light">
+                    <h5 class="modal-title fw-bold" id="proofModalLabel">Detail Bukti Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0 bg-dark text-center d-flex align-items-center justify-content-center" style="overflow: hidden;">
+                    <img src="{{ storage_url($proofPath) }}" alt="Bukti Pembayaran Full" class="img-fluid" style="max-height: 70vh; object-fit: contain;">
+                </div>
+                <div class="modal-footer border-0 bg-light">
+                    <a href="{{ storage_url($proofPath) }}" download class="btn btn-primary btn-sm">
+                        <i class="fas fa-download me-2"></i>Download Gambar
+                    </a>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+@endsection
+
+@push('styles')
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
+@endpush
