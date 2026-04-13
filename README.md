@@ -229,62 +229,85 @@ BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML, GD
 
 ## 🚀 Instalasi
 
-### 1️⃣ Clone Repository
-```bash
-git clone https://github.com/ardhikaxx/banyu-biru-nganjuk.git
-cd banyu-biru-nganjuk
-```
+### ⚡ Cara Cepat (Setelah Clone)
 
-### 2️⃣ Install Dependencies
 ```bash
+# 1. Masuk ke folder project
+cd wisata-web
+
+# 2. Install semua dependencies
 composer install
 npm install
-```
 
-### 3️⃣ Konfigurasi Environment
-```bash
+# 3. Buat file .env dan generate application key
 cp .env.example .env
 php artisan key:generate
-```
 
-Edit file `.env` dan sesuaikan konfigurasi database:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=wisata_db
-DB_USERNAME=root
-DB_PASSWORD=
-```
+# 4. Buat database (via phpMyAdmin atau command)
+# Windows (XAMPP):
+C:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE wisata_web CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-### 4️⃣ Migrasi Database
-```bash
+# 5. Jalankan migrations (tabel sessions sudah termasuk!)
 php artisan migrate
-```
 
-### 5️⃣ Seed Data (Opsional)
-```bash
+# 6. Seed data (opsional - untuk data awal)
 php artisan db:seed
-```
 
-### 6️⃣ Compile Assets
-```bash
+# 7. Compile frontend assets
 npm run build
-# atau untuk development
-npm run dev
-```
 
-### 7️⃣ Storage Link
-```bash
+# 8. Buat storage link
 php artisan storage:link
-```
 
-### 8️⃣ Jalankan Server
-```bash
+# 9. Jalankan server
 php artisan serve
 ```
 
 > 🌐 **Akses**: `http://127.0.0.1:8000`
+
+### 📝 Catatan Penting
+
+- ✅ **Tabel `sessions` sudah termasuk** dalam migration Laravel default, tidak perlu command tambahan
+- ✅ **Cukup jalankan** `php artisan migrate` untuk membuat semua tabel
+- ⚠️ **Pastikan database sudah dibuat** di MySQL/phpMyAdmin sebelum menjalankan migration
+
+---
+
+## 🐛 Troubleshooting
+
+### ❌ Error: Table doesn't exist
+
+Jika muncul error seperti `Table 'wisata_web.sessions' doesn't exist`:
+
+```bash
+# Hapus dan buat ulang database
+C:\xampp\mysql\bin\mysql.exe -u root -e "DROP DATABASE IF EXISTS wisata_web; CREATE DATABASE wisata_web CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# Jalankan ulang migrations
+php artisan migrate:fresh
+```
+
+### ❌ Error: Tablespace corrupted
+
+Jika muncul error `Tablespace for table exists. Please DISCARD the tablespace before IMPORT`:
+
+```bash
+# Hapus folder database manual (Windows XAMPP)
+rmdir /s /q C:\xampp\mysql\data\wisata_web
+
+# Buat database baru
+C:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE wisata_web CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# Jalankan migrations
+php artisan migrate:fresh
+```
+
+### ❌ Error: .env file not found
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
 ---
 
