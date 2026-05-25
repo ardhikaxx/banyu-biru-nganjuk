@@ -592,7 +592,7 @@ home-shell
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold mb-2">No. Telepon *</label>
-                                    <input type="tel" class="form-control form-control-lg" id="phone" name="visitor_phone" required>
+                                    <input type="tel" class="form-control form-control-lg" id="phone" name="visitor_phone" required inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label fw-semibold mb-2">Alamat *</label>
@@ -632,7 +632,7 @@ home-shell
                     <input type="hidden" id="selectedTicketId">
                     <div class="mb-4">
                         <label class="form-label fw-semibold mb-2">Jumlah Tiket</label>
-                        <input type="number" class="form-control form-control-lg" id="modalQuantity" min="1" max="20" value="1">
+                        <input type="number" class="form-control form-control-lg" id="modalQuantity" min="1" max="20" value="1" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-semibold mb-2">Tanggal Kunjungan</label>

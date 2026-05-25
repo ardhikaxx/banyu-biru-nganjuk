@@ -52,24 +52,24 @@
                                 @enderror
                             </div>
                             
-                            <div class="col-md-6">
-                                <label class="form-label">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
                                     Harga <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
-                                    <span class="input-group-text">Rp</span>
-                                    <input type="number" class="form-control" name="price" value="{{ old('price') }}" placeholder="50000" required>
+                                    <span class="input-group-text bg-light">Rp</span>
+                                    <input type="number" class="form-control" name="price" value="{{ old('price') }}" placeholder="50000" required min="0" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 </div>
                                 @error('price')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            
-                            <div class="col-md-6">
-                                <label class="form-label">
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
                                     Kuota Per Hari <span class="text-danger">*</span>
                                 </label>
-                                <input type="number" class="form-control" name="quota_per_day" value="{{ old('quota_per_day') }}" placeholder="100" required>
+                                <input type="number" class="form-control" name="quota_per_day" value="{{ old('quota_per_day') }}" placeholder="100" required min="1" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 <small class="text-muted">Jumlah maksimal tiket yang dapat dijual per hari</small>
                                 @error('quota_per_day')
                                     <small class="text-danger d-block">{{ $message }}</small>

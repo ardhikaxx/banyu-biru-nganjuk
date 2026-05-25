@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">No. Handphone</label>
-                            <input type="text" class="form-control" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="08xxxxxxxxxx">
+                            <input type="tel" class="form-control" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="08xxxxxxxxxx" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             @error('phone')<small class="text-danger">{{ $message }}</small>@enderror
                         </div>
                         <div class="col-12">

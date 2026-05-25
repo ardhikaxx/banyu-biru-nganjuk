@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">No HP</label>
-                    <input class="form-control" type="text" name="visitor_phone" required>
+                    <input class="form-control" type="tel" name="visitor_phone" required inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
                 <div class="col-12">
                     <label class="form-label">Alamat</label>

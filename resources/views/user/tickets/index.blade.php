@@ -34,7 +34,7 @@
                                         <input type="hidden" name="items[{{ $loop->index }}][ticket_id]" value="{{ $ticket->id }}">
                                         <div class="btn-group" role="group">
                                             <button class="btn btn-outline-primary qty-minus" type="button"><i class="fas fa-minus"></i></button>
-                                            <input type="number" class="form-control text-center qty-input" name="items[{{ $loop->index }}][qty]" value="1" min="1" max="20" style="width: 85px;">
+                                            <input type="number" class="form-control text-center qty-input" name="items[{{ $loop->index }}][qty]" value="1" min="1" max="20" style="width: 85px;" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                             <button class="btn btn-outline-primary qty-plus" type="button"><i class="fas fa-plus"></i></button>
                                         </div>
                                     </div>

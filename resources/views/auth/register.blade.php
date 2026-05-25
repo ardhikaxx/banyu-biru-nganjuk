@@ -22,7 +22,7 @@
 
                             <div class="col-md-6">
                                 <label class="form-label">No. Handphone</label>
-                                <input type="text" name="phone" class="form-control" placeholder="08xxxxxxxxxx">
+                                <input type="tel" name="phone" class="form-control" placeholder="08xxxxxxxxxx" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             </div>
 
                             <div class="col-12">
