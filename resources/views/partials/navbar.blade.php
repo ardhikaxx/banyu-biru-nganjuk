@@ -13,6 +13,21 @@
         </button>
 
         <div class="collapse navbar-collapse" id="mainNav">
+            {{-- Mobile User Info (Only visible on mobile inside collapse) --}}
+            @auth
+                <div class="d-xl-none mobile-user-header mb-3">
+                    <div class="dropdown-user-info">
+                        <div class="dropdown-avatar">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
+                        <div>
+                            <div class="dropdown-user-name">{{ auth()->user()->name }}</div>
+                            <div class="dropdown-user-email">{{ auth()->user()->email }}</div>
+                        </div>
+                    </div>
+                </div>
+            @endauth
+
             <ul class="navbar-nav ms-auto align-items-xl-center gap-1 mt-3 mt-xl-0">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
@@ -23,13 +38,24 @@
                 @auth
                     @if(auth()->user()->hasRole('user'))
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('user.tickets.*') ? 'active' : '' }}" href="{{ route('user.tickets.index') }}">
-                                <i class="fas fa-ticket-alt me-1"></i>Tiket
+                            <a class="nav-link {{ request()->routeIs('user.tickets.index') ? 'active' : '' }}" href="{{ route('user.tickets.index') }}">
+                                <i class="fas fa-ticket-alt me-1"></i>Pesan Tiket
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('user.bookings.*') ? 'active' : '' }}" href="{{ route('user.bookings.index') }}">
-                                <i class="fas fa-calendar-check me-1"></i>Booking
+                            <a class="nav-link {{ request()->routeIs('user.bookings.index') ? 'active' : '' }}" href="{{ route('user.bookings.index') }}">
+                                <i class="fas fa-calendar-check me-1"></i>Pesan Booking
+                            </a>
+                        </li>
+                        {{-- Mobile Only Links --}}
+                        <li class="nav-item d-xl-none">
+                            <a class="nav-link {{ request()->routeIs('user.tickets.history') ? 'active' : '' }}" href="{{ route('user.tickets.history') }}">
+                                <i class="fas fa-history me-1"></i>Tiket Saya
+                            </a>
+                        </li>
+                        <li class="nav-item d-xl-none">
+                            <a class="nav-link {{ request()->routeIs('user.bookings.history') ? 'active' : '' }}" href="{{ route('user.bookings.history') }}">
+                                <i class="fas fa-clock-rotate-left me-1"></i>Booking Saya
                             </a>
                         </li>
                         <li class="nav-item">
@@ -96,24 +122,26 @@
                     @endif
 
                     @if(auth()->user()->hasRole('admin'))
-                        <a class="btn btn-primary btn-sm" href="{{ route('admin.dashboard') }}">
+                        <a class="btn btn-primary btn-sm mb-2 mb-xl-0 d-block d-xl-inline-block" href="{{ route('admin.dashboard') }}">
                             <i class="fas fa-gauge-high me-1"></i>Dashboard Admin
                         </a>
                     @endif
 
                     <form action="{{ route('logout') }}" method="POST" class="d-inline logout-form">
                         @csrf
-                        <button class="btn btn-outline-primary btn-sm" type="submit">
+                        <button class="btn btn-outline-primary btn-sm w-100 w-xl-auto" type="submit">
                             <i class="fas fa-right-from-bracket me-1"></i>Logout
                         </button>
                     </form>
                 @else
-                    <a class="btn btn-outline-primary btn-sm" href="{{ route('register') }}">
-                        <i class="fas fa-user-plus me-1"></i>Daftar
-                    </a>
-                    <a class="btn btn-primary btn-sm" href="{{ route('login') }}">
-                        <i class="fas fa-right-to-bracket me-1"></i>Login
-                    </a>
+                    <div class="d-flex flex-column flex-xl-row gap-2">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ route('register') }}">
+                            <i class="fas fa-user-plus me-1"></i>Daftar
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('login') }}">
+                            <i class="fas fa-right-to-bracket me-1"></i>Login
+                        </a>
+                    </div>
                 @endauth
             </div>
         </div>

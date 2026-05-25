@@ -2150,18 +2150,76 @@ textarea.form-control {
 
 /* Ensure navbar container doesn't clip dropdown */
 .site-navbar .container {
-    position: static;
+    position: relative;
     overflow: visible !important;
 }
 
 .site-navbar .navbar-collapse {
-    position: static;
     overflow: visible !important;
 }
 
 .site-navbar .nav-auth-actions {
     position: static;
     overflow: visible !important;
+}
+
+/* Mobile Overlay Navbar Styling */
+@media (max-width: 1199.98px) {
+    .site-navbar .navbar-collapse {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px);
+        padding: 0 1.5rem !important;
+        margin-top: 1rem !important;
+        border-radius: var(--radius-lg) !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+        border: 1px solid rgba(15, 118, 110, 0.15) !important;
+        z-index: 10000 !important;
+        
+        /* Transition properties */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: block !important;
+        height: auto !important;
+    }
+
+    .site-navbar .navbar-collapse.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        padding: 1.5rem !important;
+    }
+
+    .site-navbar .navbar-collapse.collapsing {
+        opacity: 0;
+        visibility: visible;
+        transform: translateY(-10px);
+        padding: 1.5rem !important;
+    }
+
+    .mobile-user-header {
+        background: rgba(15, 118, 110, 0.05);
+        padding: 0.75rem;
+        border-radius: var(--radius);
+        border: 1px solid rgba(15, 118, 110, 0.08);
+    }
+
+    .site-navbar .nav-link {
+        padding: 0.75rem 1rem !important;
+        border-radius: 12px;
+        margin-bottom: 0.25rem;
+    }
+
+    .site-navbar .nav-link:hover,
+    .site-navbar .nav-link.active {
+        background: rgba(15, 118, 110, 0.08);
+        color: var(--brand-deep) !important;
+    }
 }
 
 .site-navbar .dropdown {
