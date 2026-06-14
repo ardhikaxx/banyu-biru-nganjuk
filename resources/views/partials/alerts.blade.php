@@ -4,15 +4,8 @@
             icon: 'success',
             title: 'Berhasil!',
             text: @json(session('success')),
-            timer: 3000,
-            showConfirmButton: false,
-            toast: true,
-            position: 'top-end',
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
+            confirmButtonColor: '#0f766e',
+            confirmButtonText: 'OK'
         });
     </script>
 @endif

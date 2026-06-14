@@ -62,4 +62,47 @@
         </div>
     </div>
 </div>
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action="{{ url('/login') }}"]');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = form.querySelector('input[name="email"]').value.trim();
+            const password = form.querySelector('input[name="password"]').value;
+            
+            if (!email) {
+                return showError('Validasi Gagal', 'Email tidak boleh kosong.');
+            }
+            
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return showError('Validasi Gagal', 'Format email tidak valid.');
+            }
+            
+            if (!password) {
+                return showError('Validasi Gagal', 'Password tidak boleh kosong.');
+            }
+            
+            // If all validation passes, submit the form
+            this.submit();
+        });
+    }
+    
+    function showError(title, text) {
+        Swal.fire({
+            icon: 'error',
+            title: title,
+            text: text,
+            confirmButtonColor: '#0f766e',
+            confirmButtonText: 'OK'
+        });
+    }
+});
+</script>
+@endpush
 @endsection

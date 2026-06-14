@@ -81,4 +81,72 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action="{{ url('/register') }}"]');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = form.querySelector('input[name="name"]').value.trim();
+            const email = form.querySelector('input[name="email"]').value.trim();
+            const phone = form.querySelector('input[name="phone"]').value.trim();
+            const password = form.querySelector('input[name="password"]').value;
+            const passwordConfirmation = form.querySelector('input[name="password_confirmation"]').value;
+            const terms = form.querySelector('#terms').checked;
+            
+            if (!name) {
+                return showError('Validasi Gagal', 'Nama lengkap tidak boleh kosong.');
+            }
+            
+            if (!email) {
+                return showError('Validasi Gagal', 'Email tidak boleh kosong.');
+            }
+            
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return showError('Validasi Gagal', 'Format email tidak valid.');
+            }
+            
+            if (!password) {
+                return showError('Validasi Gagal', 'Password tidak boleh kosong.');
+            }
+            
+            if (password.length < 6) {
+                return showError('Validasi Gagal', 'Password minimal 6 karakter.');
+            }
+            
+            if (!passwordConfirmation) {
+                return showError('Validasi Gagal', 'Konfirmasi password tidak boleh kosong.');
+            }
+            
+            if (password !== passwordConfirmation) {
+                return showError('Validasi Gagal', 'Password dan Konfirmasi Password tidak sama.');
+            }
+            
+            if (!terms) {
+                return showError('Validasi Gagal', 'Anda harus menyetujui syarat dan ketentuan.');
+            }
+            
+            // If all validation passes, submit the form
+            this.submit();
+        });
+    }
+    
+    function showError(title, text) {
+        Swal.fire({
+            icon: 'error',
+            title: title,
+            text: text,
+            confirmButtonColor: '#0f766e',
+            confirmButtonText: 'OK'
+        });
+    }
+});
+</script>
+@endpush
 @endsection
