@@ -42,10 +42,12 @@ class AuthController extends Controller
         $user = $request->user();
 
         if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin.');
+            return back()->with('auth_success', 'Login berhasil sebagai admin.')
+                         ->with('redirect_url', route('admin.dashboard'));
         }
 
-        return redirect()->route('home')->with('success', 'Login berhasil.');
+        return back()->with('auth_success', 'Login berhasil.')
+                     ->with('redirect_url', route('home'));
     }
 
     public function register(Request $request)
@@ -77,7 +79,8 @@ class AuthController extends Controller
             Auth::login($user);
             $request->session()->regenerate();
 
-            return redirect()->route('home')->with('success', 'Registrasi berhasil. Selamat datang!');
+            return back()->with('auth_success', 'Registrasi berhasil. Selamat datang!')
+                         ->with('redirect_url', route('home'));
         } catch (\Exception $e) {
             return back()->withInput()
                          ->with('error_title', 'Registrasi Gagal')

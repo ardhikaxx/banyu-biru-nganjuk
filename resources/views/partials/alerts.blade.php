@@ -1,3 +1,19 @@
+@if (session('auth_success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: @json(session('auth_success')),
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            willClose: () => {
+                window.location.href = @json(session('redirect_url'));
+            }
+        });
+    </script>
+@endif
+
 @if (session('success'))
     <script>
         Swal.fire({
