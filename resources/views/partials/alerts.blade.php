@@ -17,18 +17,6 @@
     </script>
 @endif
 
-@if (session('error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal!',
-            text: @json(session('error')),
-            confirmButtonColor: '#0f766e',
-            confirmButtonText: 'OK'
-        });
-    </script>
-@endif
-
 @if (session('info'))
     <script>
         Swal.fire({
@@ -89,18 +77,28 @@
     </script>
 @endif
 
-@if ($errors->any())
+@if (session('error') || $errors->any())
     <script>
+        let errorHtml = '';
+        let errorText = '';
+        
+        @if($errors->any())
+            errorHtml = `<div class="text-start">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>`;
+        @elseif(session('error'))
+            errorText = @json(session('error'));
+        @endif
+
         Swal.fire({
             icon: 'error',
-            title: 'Validasi Gagal',
-            html: `<div class="text-start">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>`,
+            title: @json(session('error_title') ?? (session('error') ? 'Gagal!' : 'Validasi Gagal')),
+            html: errorHtml || undefined,
+            text: errorText || undefined,
             confirmButtonColor: '#0f766e',
             confirmButtonText: 'OK'
         });

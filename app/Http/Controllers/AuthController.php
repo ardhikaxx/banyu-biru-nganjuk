@@ -21,13 +21,21 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
         ]);
 
-        if (! Auth::attempt($credentials, $request->boolean('remember'))) {
-            return back()->withErrors(['email' => 'Email atau password tidak valid.'])->onlyInput('email');
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput()
+                         ->with('error_title', 'Login Gagal')
+                         ->with('error', 'Silakan periksa kembali email atau password Anda.');
+        }
+
+        if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            return back()->withErrors(['email' => 'Email atau password tidak valid.'])->onlyInput('email')
+                         ->with('error_title', 'Login Gagal')
+                         ->with('error', 'Kredensial tidak valid.');
         }
 
         $request->session()->regenerate();
@@ -42,26 +50,39 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $data = $request->validate([
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:150', 'unique:users,email'],
             'phone' => ['nullable', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'] ?? null,
-            'password' => Hash::make($data['password']),
-        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                         ->withInput()
+                         ->with('error_title', 'Registrasi Gagal')
+                         ->with('error', 'Silakan periksa kembali data Anda.');
+        }
 
-        $user->assignRole('user');
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone ?? null,
+                'password' => Hash::make($request->password),
+            ]);
 
-        Auth::login($user);
-        $request->session()->regenerate();
+            $user->assignRole('user');
 
-        return redirect()->route('home')->with('success', 'Registrasi berhasil.');
+            Auth::login($user);
+            $request->session()->regenerate();
+
+            return redirect()->route('home')->with('success', 'Registrasi berhasil. Selamat datang!');
+        } catch (\Exception $e) {
+            return back()->withInput()
+                         ->with('error_title', 'Registrasi Gagal')
+                         ->with('error', 'Terjadi kesalahan pada sistem.');
+        }
     }
 
     public function logout(Request $request)
