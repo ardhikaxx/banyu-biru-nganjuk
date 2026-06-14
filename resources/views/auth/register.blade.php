@@ -132,8 +132,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 return showError('Validasi Gagal', 'Anda harus menyetujui syarat dan ketentuan.');
             }
             
-            // If all validation passes, submit the form
-            this.submit();
+            // Instead of standard submit, do AJAX fetch
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Memproses...';
+            
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: data.message,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        willClose: () => {
+                            window.location.href = data.redirect_url;
+                        }
+                    });
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                    showError('Registrasi Gagal', data.message || 'Silakan periksa kembali data Anda.');
+                }
+            })
+            .catch(error => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+                showError('Error', 'Terjadi kesalahan pada sistem.');
+            });
         });
     }
     

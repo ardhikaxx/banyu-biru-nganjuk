@@ -27,12 +27,24 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
             return back()->withErrors($validator)->withInput()
                          ->with('error_title', 'Login Gagal')
                          ->with('error', 'Silakan periksa kembali email atau password Anda.');
         }
 
         if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email atau password tidak valid.'
+                ], 401);
+            }
             return back()->withErrors(['email' => 'Email atau password tidak valid.'])->onlyInput('email')
                          ->with('error_title', 'Login Gagal')
                          ->with('error', 'Kredensial tidak valid.');
@@ -42,12 +54,24 @@ class AuthController extends Controller
         $user = $request->user();
 
         if ($user->hasRole('admin')) {
-            return back()->with('auth_success', 'Login berhasil sebagai admin.')
-                         ->with('redirect_url', route('admin.dashboard'));
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Login berhasil sebagai admin.',
+                    'redirect_url' => route('admin.dashboard')
+                ]);
+            }
+            return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin.');
         }
 
-        return back()->with('auth_success', 'Login berhasil.')
-                     ->with('redirect_url', route('home'));
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Login berhasil.',
+                'redirect_url' => route('home')
+            ]);
+        }
+        return redirect()->route('home')->with('success', 'Login berhasil.');
     }
 
     public function register(Request $request)
@@ -60,6 +84,12 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
             return back()->withErrors($validator)
                          ->withInput()
                          ->with('error_title', 'Registrasi Gagal')
@@ -79,9 +109,21 @@ class AuthController extends Controller
             Auth::login($user);
             $request->session()->regenerate();
 
-            return back()->with('auth_success', 'Registrasi berhasil. Selamat datang!')
-                         ->with('redirect_url', route('home'));
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Registrasi berhasil. Selamat datang!',
+                    'redirect_url' => route('home')
+                ]);
+            }
+            return redirect()->route('home')->with('success', 'Registrasi berhasil. Selamat datang!');
         } catch (\Exception $e) {
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan pada sistem.'
+                ], 500);
+            }
             return back()->withInput()
                          ->with('error_title', 'Registrasi Gagal')
                          ->with('error', 'Terjadi kesalahan pada sistem.');
