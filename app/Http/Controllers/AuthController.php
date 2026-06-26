@@ -21,10 +21,16 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $messages = [
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password tidak boleh kosong.',
+        ];
+
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
-        ]);
+        ], $messages);
 
         if ($validator->fails()) {
             if ($request->wantsJson() || $request->ajax()) {
@@ -34,8 +40,7 @@ class AuthController extends Controller
                 ], 422);
             }
             return back()->withErrors($validator)->withInput()
-                         ->with('error_title', 'Login Gagal')
-                         ->with('error', 'Silakan periksa kembali email atau password Anda.');
+                         ->with('error_title', 'Validasi Gagal');
         }
 
         if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
@@ -46,8 +51,7 @@ class AuthController extends Controller
                 ], 401);
             }
             return back()->withErrors(['email' => 'Email atau password tidak valid.'])->onlyInput('email')
-                         ->with('error_title', 'Login Gagal')
-                         ->with('error', 'Kredensial tidak valid.');
+                         ->with('error_title', 'Login Gagal');
         }
 
         $request->session()->regenerate();
@@ -76,12 +80,27 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $messages = [
+            'name.required' => 'Nama lengkap tidak boleh kosong.',
+            'name.max' => 'Nama lengkap maksimal 100 karakter.',
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'email.max' => 'Email maksimal 150 karakter.',
+            'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
+            'phone.max' => 'Nomor handphone maksimal 20 digit.',
+            'password.required' => 'Password tidak boleh kosong.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Password dan Konfirmasi Password tidak sama.',
+            'terms.required' => 'Anda harus menyetujui syarat dan ketentuan.',
+        ];
+
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:150', 'unique:users,email'],
             'phone' => ['nullable', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+            'terms' => ['required'],
+        ], $messages);
 
         if ($validator->fails()) {
             if ($request->wantsJson() || $request->ajax()) {
@@ -92,8 +111,7 @@ class AuthController extends Controller
             }
             return back()->withErrors($validator)
                          ->withInput()
-                         ->with('error_title', 'Registrasi Gagal')
-                         ->with('error', 'Silakan periksa kembali data Anda.');
+                         ->with('error_title', 'Validasi Gagal');
         }
 
         try {

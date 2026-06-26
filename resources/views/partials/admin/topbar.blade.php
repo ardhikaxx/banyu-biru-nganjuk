@@ -32,11 +32,11 @@
             <div class="topbar-profile dropdown">
                 <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="profile-avatar">
-                        <span>{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+                        <span>{{ strtoupper(substr(auth()->user()?->name ?? 'A', 0, 1)) }}</span>
                         <div class="profile-status"></div>
                     </div>
                     <div class="profile-info d-none d-md-block">
-                        <span class="profile-name">{{ auth()->user()->name }}</span>
+                        <span class="profile-name">{{ auth()->user()?->name ?? 'Administrator' }}</span>
                         <span class="profile-role">Administrator</span>
                     </div>
                     <i class="fas fa-chevron-down profile-arrow d-none d-md-inline"></i>
@@ -46,11 +46,11 @@
                     <li class="dropdown-header">
                         <div class="dropdown-user-info">
                             <div class="dropdown-avatar">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                {{ strtoupper(substr(auth()->user()?->name ?? 'A', 0, 1)) }}
                             </div>
                             <div>
-                                <div class="dropdown-user-name">{{ auth()->user()->name }}</div>
-                                <div class="dropdown-user-email">{{ auth()->user()->email }}</div>
+                                <div class="dropdown-user-name">{{ auth()->user()?->name ?? 'Administrator' }}</div>
+                                <div class="dropdown-user-email">{{ auth()->user()?->email ?? '' }}</div>
                             </div>
                         </div>
                     </li>

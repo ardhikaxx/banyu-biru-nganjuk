@@ -27,17 +27,17 @@
                     <h3 class="mb-2">Login Akun</h3>
                     <p class="text-muted mb-4">Masukkan email dan password Anda.</p>
 
-                    <form method="POST" action="{{ url('/login') }}">
+                    <form method="POST" action="{{ url('/login') }}" id="loginForm">
                         @csrf
 
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="nama@email.com" required autofocus>
+                            <input type="text" name="email" class="form-control" placeholder="nama@email.com" autofocus>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                            <input type="password" name="password" class="form-control" placeholder="Masukkan password">
                         </div>
 
                         <div class="form-check mb-4">
@@ -62,88 +62,4 @@
         </div>
     </div>
 </div>
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form[action="{{ url('/login') }}"]');
-    
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = form.querySelector('input[name="email"]').value.trim();
-            const password = form.querySelector('input[name="password"]').value;
-            
-            if (!email) {
-                return showError('Validasi Gagal', 'Email tidak boleh kosong.');
-            }
-            
-            // Simple email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                return showError('Validasi Gagal', 'Format email tidak valid.');
-            }
-            
-            if (!password) {
-                return showError('Validasi Gagal', 'Password tidak boleh kosong.');
-            }
-            
-            // Instead of standard submit, do AJAX fetch
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalBtnHtml = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Memproses...';
-            
-            const formData = new FormData(form);
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: data.message,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        willClose: () => {
-                            window.location.href = data.redirect_url;
-                        }
-                    });
-                } else {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnHtml;
-                    showError('Login Gagal', data.message || 'Kredensial tidak valid.');
-                }
-            })
-            .catch(error => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnHtml;
-                showError('Error', 'Terjadi kesalahan pada sistem.');
-            });
-        });
-    }
-    
-    function showError(title, text) {
-        Swal.fire({
-            icon: 'error',
-            title: title,
-            text: text,
-            confirmButtonColor: '#0f766e',
-            confirmButtonText: 'OK'
-        });
-    }
-});
-</script>
-@endpush
 @endsection
